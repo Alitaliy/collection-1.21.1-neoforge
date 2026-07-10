@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "collection:arrowhead/obsidian_arrowhead", "weight": 4 },
+        { "type": "minecraft:item", "name": "collection:arrowhead/bone_arrowhead", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:coin/coin_25cent_1792", "weight": 1 }
+      ]
+    }
+  ],
+  "random_sequence": "collection:archaeology/badlands_arrowhead_site_rare"
+}

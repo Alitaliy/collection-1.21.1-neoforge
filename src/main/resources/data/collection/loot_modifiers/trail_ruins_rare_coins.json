@@ -1,0 +1,14 @@
+{
+  "type": "collection:replace_archaeology_loot",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:archaeology/trail_ruins_rare"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.25
+    }
+  ],
+  "table": "collection:archaeology/trail_ruins_rare_coins"
+}

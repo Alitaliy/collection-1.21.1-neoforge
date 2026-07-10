@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "collection:coin/coin_25cent_1792",
+    "collection:coin/coin_nickel_1792",
+    "collection:coin/coin_1cent_1789"
+  ]
+}

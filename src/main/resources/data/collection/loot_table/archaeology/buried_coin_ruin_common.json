@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "collection:coin/coin_1cent_1789", "weight": 4 },
+        { "type": "minecraft:item", "name": "collection:coin/coin_nickel_1792", "weight": 4 },
+        { "type": "minecraft:item", "name": "collection:coin/coin_25cent_1792", "weight": 3 }
+      ]
+    }
+  ],
+  "random_sequence": "collection:archaeology/buried_coin_ruin_common"
+}

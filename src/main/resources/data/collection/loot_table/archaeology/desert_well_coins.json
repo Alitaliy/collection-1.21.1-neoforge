@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "collection:coin/coin_1cent_1789", "weight": 3 },
+        { "type": "minecraft:item", "name": "collection:coin/coin_nickel_1792", "weight": 3 },
+        { "type": "minecraft:item", "name": "collection:coin/coin_25cent_1792", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:relic/scarab_pendant", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:relic/silver_locket", "weight": 1 }
+      ]
+    }
+  ],
+  "random_sequence": "collection:archaeology/desert_well_coins"
+}

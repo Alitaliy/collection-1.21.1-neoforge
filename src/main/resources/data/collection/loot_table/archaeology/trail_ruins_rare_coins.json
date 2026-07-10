@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "collection:arrowhead/obsidian_arrowhead", "weight": 4 },
+        { "type": "minecraft:item", "name": "collection:arrowhead/bone_arrowhead", "weight": 3 },
+        { "type": "minecraft:item", "name": "collection:arrowhead/flint_arrowhead", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:relic/silver_locket", "weight": 1 }
+      ]
+    }
+  ],
+  "random_sequence": "collection:archaeology/trail_ruins_rare_coins"
+}

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "collection:relic/scarab_pendant",
+    "collection:relic/turquoise_ring",
+    "collection:relic/silver_locket"
+  ]
+}

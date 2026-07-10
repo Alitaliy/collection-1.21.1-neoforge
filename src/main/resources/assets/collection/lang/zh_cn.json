@@ -1,0 +1,45 @@
+{
+  "item.collection.journal.collector_journal": "收藏家手册",
+  "item.collection.coin.coin_25cent_1792": "1792年25美分硬币",
+  "item.collection.coin.coin_nickel_1792": "1792年镍币",
+  "item.collection.coin.coin_1cent_1789": "1789年便士",
+  "item.collection.arrowhead.flint_arrowhead": "燧石箭头",
+  "item.collection.arrowhead.obsidian_arrowhead": "黑曜石箭头",
+  "item.collection.arrowhead.bone_arrowhead": "骨制箭头",
+  "item.collection.relic.scarab_pendant": "圣甲虫吊坠",
+  "item.collection.relic.turquoise_ring": "绿松石戒指",
+  "item.collection.relic.silver_locket": "银质怀饰",
+  "item.collection.reward.coin_display_case": "古币展示盒",
+  "item.collection.reward.arrowhead_display_case": "箭头展示盒",
+  "item.collection.reward.relic_ledger": "遗珍名录",
+
+  "itemGroup.collection.collector_tab": "收藏家",
+
+  "collection.set.coins": "古币套组",
+  "collection.set.arrowheads": "箭头套组",
+  "collection.set.relics": "遗珍套组",
+
+  "collection.clue.coin_25cent_1792": "更常出现在沙漠金字塔和埋藏钱币遗迹。",
+  "collection.clue.coin_nickel_1792": "沙漠井与小型沙漠发掘点更容易找到它。",
+  "collection.clue.coin_1cent_1789": "古迹废墟与沙漠发掘点都可能埋着更古老的便士。",
+  "collection.clue.flint_arrowhead": "古迹废墟和恶地浅层发掘点经常能刷出它。",
+  "collection.clue.obsidian_arrowhead": "更适合去稀有古迹层和恶地深层缓存寻找。",
+  "collection.clue.bone_arrowhead": "恶地发掘点与常见遗迹层保留了较多骨制工艺。",
+  "collection.clue.scarab_pendant": "温暖海洋废墟和炽热沙地缓存里最容易出现这种饰品。",
+  "collection.clue.turquoise_ring": "海岸遗珍缓存和沙漠金字塔更适合寻找抛光首饰。",
+  "collection.clue.silver_locket": "寒冷海洋废墟与海岸残骸是最好的线索来源。",
+
+  "collection.journal.summary_header": "收藏家手册",
+  "collection.journal.detail_header": "收藏家手册：详细线索",
+  "collection.journal.set_progress": "%s：%s/%s",
+  "collection.journal.set_complete": "%s：已集齐，奖励已发放",
+  "collection.journal.next_clue": "下一条线索：%s",
+  "collection.journal.item_found": "[已发现] %s",
+  "collection.journal.item_missing": "[未发现] %s",
+  "collection.journal.clue": "线索：%s",
+  "collection.journal.tooltip.summary": "右键查看收藏进度。",
+  "collection.journal.tooltip.details": "潜行右键查看详细线索。",
+
+  "collection.progress.discovered": "发现新的收藏品：%s",
+  "collection.progress.reward_granted": "已完成 %s，并获得奖励 %s"
+}

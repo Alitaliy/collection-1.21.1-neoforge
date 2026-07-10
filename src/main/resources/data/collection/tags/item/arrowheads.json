@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "collection:arrowhead/flint_arrowhead",
+    "collection:arrowhead/obsidian_arrowhead",
+    "collection:arrowhead/bone_arrowhead"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "minecraft:desert",
+  "features": "collection:buried_coin_ruin",
+  "step": "surface_structures"
+}

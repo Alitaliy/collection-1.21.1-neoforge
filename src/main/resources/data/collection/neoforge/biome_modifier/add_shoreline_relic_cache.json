@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:beach"
+  ],
+  "features": "collection:shoreline_relic_cache",
+  "step": "surface_structures"
+}

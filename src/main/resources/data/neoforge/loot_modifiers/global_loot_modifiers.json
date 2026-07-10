@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "entries": [
+    "collection:desert_pyramid_coins",
+    "collection:desert_well_coins",
+    "collection:ocean_ruin_warm_coins",
+    "collection:ocean_ruin_cold_coins",
+    "collection:trail_ruins_common_coins",
+    "collection:trail_ruins_rare_coins"
+  ]
+}

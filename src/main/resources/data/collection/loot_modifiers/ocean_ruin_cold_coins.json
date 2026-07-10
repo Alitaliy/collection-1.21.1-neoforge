@@ -1,0 +1,14 @@
+{
+  "type": "collection:replace_archaeology_loot",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:archaeology/ocean_ruin_cold"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.06
+    }
+  ],
+  "table": "collection:archaeology/ocean_ruin_cold_coins"
+}

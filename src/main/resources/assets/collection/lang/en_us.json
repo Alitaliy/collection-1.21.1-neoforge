@@ -1,0 +1,45 @@
+{
+  "item.collection.journal.collector_journal": "Collector's Journal",
+  "item.collection.coin.coin_25cent_1792": "1792 Quarter",
+  "item.collection.coin.coin_nickel_1792": "1792 Nickel",
+  "item.collection.coin.coin_1cent_1789": "1789 Penny",
+  "item.collection.arrowhead.flint_arrowhead": "Flint Arrowhead",
+  "item.collection.arrowhead.obsidian_arrowhead": "Obsidian Arrowhead",
+  "item.collection.arrowhead.bone_arrowhead": "Bone Arrowhead",
+  "item.collection.relic.scarab_pendant": "Scarab Pendant",
+  "item.collection.relic.turquoise_ring": "Turquoise Ring",
+  "item.collection.relic.silver_locket": "Silver Locket",
+  "item.collection.reward.coin_display_case": "Coin Display Case",
+  "item.collection.reward.arrowhead_display_case": "Arrowhead Display Case",
+  "item.collection.reward.relic_ledger": "Relic Ledger",
+
+  "itemGroup.collection.collector_tab": "Collector",
+
+  "collection.set.coins": "Ancient Coin Set",
+  "collection.set.arrowheads": "Arrowhead Set",
+  "collection.set.relics": "Lost Relic Set",
+
+  "collection.clue.coin_25cent_1792": "Often turns up in desert pyramids and buried coin ruins.",
+  "collection.clue.coin_nickel_1792": "Desert wells and smaller desert digs favor this mint.",
+  "collection.clue.coin_1cent_1789": "Trail ruins and desert excavations both hide older pennies.",
+  "collection.clue.flint_arrowhead": "Common in trail ruins and the shallow layers of badlands digs.",
+  "collection.clue.obsidian_arrowhead": "Look for rarer trail-ruin finds and the deepest badlands caches.",
+  "collection.clue.bone_arrowhead": "Badlands dig sites and common ruin layers preserve worked bone.",
+  "collection.clue.scarab_pendant": "Warm ocean ruins and sun-baked desert caches hide these charms.",
+  "collection.clue.turquoise_ring": "Search shoreline caches and desert pyramids for polished jewelry.",
+  "collection.clue.silver_locket": "Cold ocean ruins and stranded shoreline relics are your best lead.",
+
+  "collection.journal.summary_header": "Collector's Journal",
+  "collection.journal.detail_header": "Collector's Journal: Detailed Clues",
+  "collection.journal.set_progress": "%s: %s/%s",
+  "collection.journal.set_complete": "%s: set completed, reward delivered",
+  "collection.journal.next_clue": "Next clue: %s",
+  "collection.journal.item_found": "[Found] %s",
+  "collection.journal.item_missing": "[Missing] %s",
+  "collection.journal.clue": "Clue: %s",
+  "collection.journal.tooltip.summary": "Use to review collection progress.",
+  "collection.journal.tooltip.details": "Sneak-use to inspect detailed clues.",
+
+  "collection.progress.discovered": "Discovered collectible: %s",
+  "collection.progress.reward_granted": "Completed %s and received %s"
+}

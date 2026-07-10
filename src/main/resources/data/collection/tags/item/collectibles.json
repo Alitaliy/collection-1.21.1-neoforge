@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#collection:coins",
+    "#collection:arrowheads",
+    "#collection:relics"
+  ]
+}
