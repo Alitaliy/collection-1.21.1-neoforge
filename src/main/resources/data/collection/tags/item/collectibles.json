@@ -3,6 +3,8 @@
   "values": [
     "#collection:coins",
     "#collection:arrowheads",
-    "#collection:relics"
+    "#collection:relics",
+    "#collection:fossils",
+    "#collection:effigies"
   ]
 }

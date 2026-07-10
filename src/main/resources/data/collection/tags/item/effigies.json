@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "collection:effigy/jade_effigy",
+    "collection:effigy/sun_idol",
+    "collection:effigy/obsidian_talisman"
+  ]
+}

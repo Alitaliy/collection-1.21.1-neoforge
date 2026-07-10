@@ -31,6 +31,20 @@ public final class CollectibleCatalog {
     public static final CollectibleDefinition SILVER_LOCKET =
             collectible("silver_locket", ModItems.SILVER_LOCKET, "relics", "collection.clue.silver_locket");
 
+    public static final CollectibleDefinition AMMONITE_FOSSIL =
+            collectible("ammonite_fossil", ModItems.AMMONITE_FOSSIL, "fossils", "collection.clue.ammonite_fossil");
+    public static final CollectibleDefinition AMBER_FOSSIL =
+            collectible("amber_fossil", ModItems.AMBER_FOSSIL, "fossils", "collection.clue.amber_fossil");
+    public static final CollectibleDefinition RIB_FRAGMENT =
+            collectible("rib_fragment", ModItems.RIB_FRAGMENT, "fossils", "collection.clue.rib_fragment");
+
+    public static final CollectibleDefinition JADE_EFFIGY =
+            collectible("jade_effigy", ModItems.JADE_EFFIGY, "effigies", "collection.clue.jade_effigy");
+    public static final CollectibleDefinition SUN_IDOL =
+            collectible("sun_idol", ModItems.SUN_IDOL, "effigies", "collection.clue.sun_idol");
+    public static final CollectibleDefinition OBSIDIAN_TALISMAN =
+            collectible("obsidian_talisman", ModItems.OBSIDIAN_TALISMAN, "effigies", "collection.clue.obsidian_talisman");
+
     public static final List<CollectibleDefinition> COLLECTIBLES = List.of(
             COIN_25CENT_1792,
             COIN_NICKEL_1792,
@@ -40,7 +54,13 @@ public final class CollectibleCatalog {
             BONE_ARROWHEAD,
             SCARAB_PENDANT,
             TURQUOISE_RING,
-            SILVER_LOCKET
+            SILVER_LOCKET,
+            AMMONITE_FOSSIL,
+            AMBER_FOSSIL,
+            RIB_FRAGMENT,
+            JADE_EFFIGY,
+            SUN_IDOL,
+            OBSIDIAN_TALISMAN
     );
 
     public static final CollectibleSetDefinition COIN_SET =
@@ -49,8 +69,12 @@ public final class CollectibleCatalog {
             set("arrowheads", "collection.set.arrowheads", ModItems.ARROWHEAD_DISPLAY_CASE, FLINT_ARROWHEAD, OBSIDIAN_ARROWHEAD, BONE_ARROWHEAD);
     public static final CollectibleSetDefinition RELIC_SET =
             set("relics", "collection.set.relics", ModItems.RELIC_LEDGER, SCARAB_PENDANT, TURQUOISE_RING, SILVER_LOCKET);
+    public static final CollectibleSetDefinition FOSSIL_SET =
+            set("fossils", "collection.set.fossils", ModItems.FOSSIL_DISPLAY_RACK, AMMONITE_FOSSIL, AMBER_FOSSIL, RIB_FRAGMENT);
+    public static final CollectibleSetDefinition EFFIGY_SET =
+            set("effigies", "collection.set.effigies", ModItems.SHRINE_RECORD, JADE_EFFIGY, SUN_IDOL, OBSIDIAN_TALISMAN);
 
-    public static final List<CollectibleSetDefinition> SETS = List.of(COIN_SET, ARROWHEAD_SET, RELIC_SET);
+    public static final List<CollectibleSetDefinition> SETS = List.of(COIN_SET, ARROWHEAD_SET, RELIC_SET, FOSSIL_SET, EFFIGY_SET);
 
     private CollectibleCatalog() {
     }
@@ -61,6 +85,14 @@ public final class CollectibleCatalog {
 
     public static Optional<CollectibleSetDefinition> findSet(String setId) {
         return SETS.stream().filter(set -> set.id().equals(setId)).findFirst();
+    }
+
+    public static int featuredSetIndexForDay(long dayTime) {
+        return (int) Math.floorMod(dayTime / 24000L, SETS.size());
+    }
+
+    public static CollectibleSetDefinition featuredSetForDay(long dayTime) {
+        return SETS.get(featuredSetIndexForDay(dayTime));
     }
 
     private static CollectibleDefinition collectible(

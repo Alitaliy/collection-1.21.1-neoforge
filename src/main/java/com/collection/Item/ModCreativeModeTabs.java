@@ -29,9 +29,17 @@ public final class ModCreativeModeTabs {
                         output.accept(ModItems.SCARAB_PENDANT);
                         output.accept(ModItems.TURQUOISE_RING);
                         output.accept(ModItems.SILVER_LOCKET);
+                        output.accept(ModItems.AMMONITE_FOSSIL);
+                        output.accept(ModItems.AMBER_FOSSIL);
+                        output.accept(ModItems.RIB_FRAGMENT);
+                        output.accept(ModItems.JADE_EFFIGY);
+                        output.accept(ModItems.SUN_IDOL);
+                        output.accept(ModItems.OBSIDIAN_TALISMAN);
                         output.accept(ModItems.COIN_DISPLAY_CASE);
                         output.accept(ModItems.ARROWHEAD_DISPLAY_CASE);
                         output.accept(ModItems.RELIC_LEDGER);
+                        output.accept(ModItems.FOSSIL_DISPLAY_RACK);
+                        output.accept(ModItems.SHRINE_RECORD);
                     }).build());
 
     private ModCreativeModeTabs() {

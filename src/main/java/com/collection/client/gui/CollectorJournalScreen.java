@@ -85,6 +85,9 @@ public final class CollectorJournalScreen extends Screen {
     }
 
     private void renderSummaryPage(GuiGraphics guiGraphics, int left, int top, PlayerCollectionProgress progress) {
+        long dayTime = this.minecraft != null && this.minecraft.level != null ? this.minecraft.level.getDayTime() : 0L;
+        CollectibleSetDefinition featuredSet = CollectibleCatalog.featuredSetForDay(dayTime);
+
         guiGraphics.drawString(this.font, Component.translatable("collection.journal.screen.summary"), left + 16, top + 32, 0x4A3425, false);
         guiGraphics.drawString(
                 this.font,
@@ -94,36 +97,39 @@ public final class CollectorJournalScreen extends Screen {
                 0x4A3425,
                 false
         );
+        guiGraphics.drawString(
+                this.font,
+                Component.translatable("collection.journal.screen.featured", featuredSet.name()),
+                left + 16,
+                top + 58,
+                0x6B4F3D,
+                false
+        );
+        guiGraphics.drawString(
+                this.font,
+                Component.translatable("collection.journal.screen.featured_bonus"),
+                left + 16,
+                top + 70,
+                0x6B4F3D,
+                false
+        );
 
-        int rowY = top + 66;
+        int rowY = top + 88;
         for (CollectibleSetDefinition set : CollectibleCatalog.SETS) {
             int discovered = progress.discoveredCount(set);
-            guiGraphics.drawString(this.font, set.name(), left + 16, rowY, 0x4A3425, false);
+            guiGraphics.renderFakeItem(set.createRewardStack(), left + 16, rowY - 4);
+            guiGraphics.drawString(this.font, set.name(), left + 38, rowY, 0x4A3425, false);
             guiGraphics.drawString(
                     this.font,
-                    Component.translatable("collection.journal.set_progress", set.name(), discovered, set.size()),
-                    left + 16,
-                    rowY + 12,
-                    0x6B4F3D,
+                    Component.literal(discovered + "/" + set.size() + (progress.hasClaimedReward(set.id()) ? " ✓" : "")),
+                    left + PAGE_WIDTH - 48,
+                    rowY,
+                    progress.hasClaimedReward(set.id()) ? 0x2E6A34 : 0x6B4F3D,
                     false
             );
 
-            Component rewardLine = progress.hasClaimedReward(set.id())
-                    ? Component.translatable("collection.journal.screen.reward_claimed", set.createRewardStack().getHoverName()).withStyle(ChatFormatting.DARK_GREEN)
-                    : Component.translatable("collection.journal.screen.reward_missing").withStyle(ChatFormatting.DARK_RED);
-            guiGraphics.drawString(this.font, rewardLine, left + 16, rowY + 24, 0x4A3425, false);
-            guiGraphics.renderFakeItem(set.createRewardStack(), left + PAGE_WIDTH - 36, rowY + 8);
-
-            rowY += 38;
+            rowY += 16;
         }
-
-        guiGraphics.drawCenteredString(
-                this.font,
-                Component.translatable("collection.journal.screen.map_hint"),
-                left + PAGE_WIDTH / 2,
-                top + PAGE_HEIGHT - 44,
-                0x6B4F3D
-        );
     }
 
     private void renderSetPage(
@@ -169,6 +175,10 @@ public final class CollectorJournalScreen extends Screen {
             }
         }
 
+        long dayTime = this.minecraft != null && this.minecraft.level != null ? this.minecraft.level.getDayTime() : 0L;
+        if (CollectibleCatalog.featuredSetForDay(dayTime).id().equals(set.id())) {
+            guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.featured_page"), left + PAGE_WIDTH / 2, top + PAGE_HEIGHT - 56, 0x8A6B2F);
+        }
         Component status = progress.isSetComplete(set)
                 ? Component.translatable("collection.journal.screen.complete").withStyle(ChatFormatting.DARK_GREEN)
                 : Component.translatable("collection.journal.screen.incomplete").withStyle(ChatFormatting.GOLD);

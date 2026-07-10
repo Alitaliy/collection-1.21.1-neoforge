@@ -1,0 +1,23 @@
+{
+  "parent": "collection:first_discovery",
+  "display": {
+    "icon": {
+      "id": "collection:reward/shrine_record"
+    },
+    "title": {
+      "translate": "advancement.collection.complete_effigies.title"
+    },
+    "description": {
+      "translate": "advancement.collection.complete_effigies.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

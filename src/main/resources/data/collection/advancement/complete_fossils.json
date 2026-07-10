@@ -1,0 +1,23 @@
+{
+  "parent": "collection:first_discovery",
+  "display": {
+    "icon": {
+      "id": "collection:reward/fossil_display_rack"
+    },
+    "title": {
+      "translate": "advancement.collection.complete_fossils.title"
+    },
+    "description": {
+      "translate": "advancement.collection.complete_fossils.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

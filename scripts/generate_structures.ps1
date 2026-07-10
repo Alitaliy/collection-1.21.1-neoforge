@@ -205,11 +205,12 @@ function New-Block {
 function Write-Site {
     param(
         [string]$RelativePath,
-        [object[]]$Blocks
+        [object[]]$Blocks,
+        [int[]]$Size = @(5, 2, 5)
     )
 
     $fullPath = Join-Path $root "$RelativePath.nbt"
-    Write-RootCompound $fullPath (New-StructureTag -Size @(5, 2, 5) -Blocks $Blocks)
+    Write-RootCompound $fullPath (New-StructureTag -Size $Size -Blocks $Blocks)
     Write-Host "generated $fullPath"
 }
 
@@ -219,6 +220,10 @@ $badlandsCommon = New-BrushableNbt "badlands_arrowhead_site_common"
 $badlandsRare = New-BrushableNbt "badlands_arrowhead_site_rare"
 $shorelineCommon = New-BrushableNbt "shoreline_relic_cache_common"
 $shorelineRare = New-BrushableNbt "shoreline_relic_cache_rare"
+$fossilCommon = New-BrushableNbt "frozen_fossil_site_common"
+$fossilRare = New-BrushableNbt "frozen_fossil_site_rare"
+$jungleCommon = New-BrushableNbt "jungle_idol_shrine_common"
+$jungleRare = New-BrushableNbt "jungle_idol_shrine_rare"
 
 $buriedCoinSites = @(
     @(
@@ -298,6 +303,72 @@ $shorelineSites = @(
     )
 )
 
+$frozenFossilSites = @(
+    @(
+        (New-Block 0 0 1 "packed_ice"), (New-Block 0 0 5 "packed_ice"),
+        (New-Block 1 0 0 "bone_block"), (New-Block 1 0 1 "gravel"), (New-Block 1 0 3 "suspicious_gravel" $fossilCommon), (New-Block 1 0 5 "gravel"), (New-Block 1 0 6 "bone_block"),
+        (New-Block 2 0 2 "blue_ice"), (New-Block 2 0 3 "gravel"), (New-Block 2 0 4 "blue_ice"),
+        (New-Block 3 0 1 "suspicious_gravel" $fossilCommon), (New-Block 3 0 2 "gravel"), (New-Block 3 0 3 "bone_block"), (New-Block 3 0 4 "suspicious_gravel" $fossilRare), (New-Block 3 0 5 "gravel"),
+        (New-Block 4 0 2 "blue_ice"), (New-Block 4 0 3 "gravel"), (New-Block 4 0 4 "blue_ice"),
+        (New-Block 5 0 0 "bone_block"), (New-Block 5 0 1 "gravel"), (New-Block 5 0 3 "suspicious_gravel" $fossilCommon), (New-Block 5 0 5 "gravel"), (New-Block 5 0 6 "bone_block"),
+        (New-Block 6 0 1 "packed_ice"), (New-Block 6 0 5 "packed_ice"),
+        (New-Block 3 1 3 "snow_block")
+    ),
+    @(
+        (New-Block 0 0 2 "bone_block"), (New-Block 0 0 4 "bone_block"),
+        (New-Block 1 0 1 "gravel"), (New-Block 1 0 2 "suspicious_gravel" $fossilCommon), (New-Block 1 0 4 "suspicious_gravel" $fossilCommon), (New-Block 1 0 5 "gravel"),
+        (New-Block 2 0 0 "packed_ice"), (New-Block 2 0 2 "blue_ice"), (New-Block 2 0 3 "gravel"), (New-Block 2 0 4 "blue_ice"), (New-Block 2 0 6 "packed_ice"),
+        (New-Block 3 0 2 "gravel"), (New-Block 3 0 3 "suspicious_gravel" $fossilRare), (New-Block 3 0 4 "gravel"),
+        (New-Block 4 0 0 "packed_ice"), (New-Block 4 0 2 "blue_ice"), (New-Block 4 0 3 "gravel"), (New-Block 4 0 4 "blue_ice"), (New-Block 4 0 6 "packed_ice"),
+        (New-Block 5 0 1 "gravel"), (New-Block 5 0 2 "suspicious_gravel" $fossilCommon), (New-Block 5 0 4 "suspicious_gravel" $fossilCommon), (New-Block 5 0 5 "gravel"),
+        (New-Block 6 0 2 "bone_block"), (New-Block 6 0 4 "bone_block"),
+        (New-Block 3 1 1 "snow_block"), (New-Block 3 1 5 "snow_block")
+    ),
+    @(
+        (New-Block 0 0 1 "packed_ice"), (New-Block 0 0 3 "bone_block"), (New-Block 0 0 5 "packed_ice"),
+        (New-Block 1 0 2 "gravel"), (New-Block 1 0 3 "suspicious_gravel" $fossilCommon), (New-Block 1 0 4 "gravel"),
+        (New-Block 2 0 1 "blue_ice"), (New-Block 2 0 2 "gravel"), (New-Block 2 0 4 "gravel"), (New-Block 2 0 5 "blue_ice"),
+        (New-Block 3 0 0 "bone_block"), (New-Block 3 0 1 "gravel"), (New-Block 3 0 2 "suspicious_gravel" $fossilCommon), (New-Block 3 0 3 "gravel"), (New-Block 3 0 4 "suspicious_gravel" $fossilRare), (New-Block 3 0 5 "gravel"), (New-Block 3 0 6 "bone_block"),
+        (New-Block 4 0 1 "blue_ice"), (New-Block 4 0 2 "gravel"), (New-Block 4 0 4 "gravel"), (New-Block 4 0 5 "blue_ice"),
+        (New-Block 5 0 2 "gravel"), (New-Block 5 0 3 "suspicious_gravel" $fossilCommon), (New-Block 5 0 4 "gravel"),
+        (New-Block 6 0 1 "packed_ice"), (New-Block 6 0 3 "bone_block"), (New-Block 6 0 5 "packed_ice"),
+        (New-Block 3 1 3 "snow_block")
+    )
+)
+
+$jungleIdolSites = @(
+    @(
+        (New-Block 0 0 0 "mossy_cobblestone"), (New-Block 0 0 6 "mossy_cobblestone"),
+        (New-Block 1 0 1 "mossy_stone_bricks"), (New-Block 1 0 3 "suspicious_gravel" $jungleCommon), (New-Block 1 0 5 "mossy_stone_bricks"),
+        (New-Block 2 0 2 "jungle_planks"), (New-Block 2 0 3 "gravel"), (New-Block 2 0 4 "jungle_planks"),
+        (New-Block 3 0 0 "cracked_stone_bricks"), (New-Block 3 0 1 "gravel"), (New-Block 3 0 2 "suspicious_sand" $jungleCommon), (New-Block 3 0 3 "chiseled_stone_bricks"), (New-Block 3 0 4 "suspicious_gravel" $jungleRare), (New-Block 3 0 5 "gravel"), (New-Block 3 0 6 "cracked_stone_bricks"),
+        (New-Block 4 0 2 "jungle_planks"), (New-Block 4 0 3 "gravel"), (New-Block 4 0 4 "jungle_planks"),
+        (New-Block 5 0 1 "mossy_stone_bricks"), (New-Block 5 0 3 "suspicious_gravel" $jungleCommon), (New-Block 5 0 5 "mossy_stone_bricks"),
+        (New-Block 6 0 0 "mossy_cobblestone"), (New-Block 6 0 6 "mossy_cobblestone"),
+        (New-Block 3 1 3 "chiseled_stone_bricks")
+    ),
+    @(
+        (New-Block 0 0 2 "mossy_cobblestone"), (New-Block 0 0 4 "mossy_cobblestone"),
+        (New-Block 1 0 1 "jungle_planks"), (New-Block 1 0 2 "gravel"), (New-Block 1 0 4 "gravel"), (New-Block 1 0 5 "jungle_planks"),
+        (New-Block 2 0 0 "mossy_stone_bricks"), (New-Block 2 0 2 "suspicious_gravel" $jungleCommon), (New-Block 2 0 3 "cracked_stone_bricks"), (New-Block 2 0 4 "suspicious_sand" $jungleCommon), (New-Block 2 0 6 "mossy_stone_bricks"),
+        (New-Block 3 0 1 "gravel"), (New-Block 3 0 3 "chiseled_stone_bricks"), (New-Block 3 0 5 "gravel"),
+        (New-Block 4 0 0 "mossy_stone_bricks"), (New-Block 4 0 2 "suspicious_sand" $jungleCommon), (New-Block 4 0 3 "cracked_stone_bricks"), (New-Block 4 0 4 "suspicious_gravel" $jungleRare), (New-Block 4 0 6 "mossy_stone_bricks"),
+        (New-Block 5 0 1 "jungle_planks"), (New-Block 5 0 2 "gravel"), (New-Block 5 0 4 "gravel"), (New-Block 5 0 5 "jungle_planks"),
+        (New-Block 6 0 2 "mossy_cobblestone"), (New-Block 6 0 4 "mossy_cobblestone"),
+        (New-Block 3 1 3 "chiseled_stone_bricks")
+    ),
+    @(
+        (New-Block 0 0 1 "mossy_cobblestone"), (New-Block 0 0 5 "mossy_cobblestone"),
+        (New-Block 1 0 0 "cracked_stone_bricks"), (New-Block 1 0 2 "jungle_planks"), (New-Block 1 0 3 "suspicious_gravel" $jungleCommon), (New-Block 1 0 4 "jungle_planks"), (New-Block 1 0 6 "cracked_stone_bricks"),
+        (New-Block 2 0 1 "gravel"), (New-Block 2 0 3 "chiseled_stone_bricks"), (New-Block 2 0 5 "gravel"),
+        (New-Block 3 0 0 "mossy_stone_bricks"), (New-Block 3 0 1 "suspicious_sand" $jungleCommon), (New-Block 3 0 2 "gravel"), (New-Block 3 0 3 "chiseled_stone_bricks"), (New-Block 3 0 4 "gravel"), (New-Block 3 0 5 "suspicious_gravel" $jungleRare), (New-Block 3 0 6 "mossy_stone_bricks"),
+        (New-Block 4 0 1 "gravel"), (New-Block 4 0 3 "chiseled_stone_bricks"), (New-Block 4 0 5 "gravel"),
+        (New-Block 5 0 0 "cracked_stone_bricks"), (New-Block 5 0 2 "jungle_planks"), (New-Block 5 0 3 "suspicious_gravel" $jungleCommon), (New-Block 5 0 4 "jungle_planks"), (New-Block 5 0 6 "cracked_stone_bricks"),
+        (New-Block 6 0 1 "mossy_cobblestone"), (New-Block 6 0 5 "mossy_cobblestone"),
+        (New-Block 3 1 3 "chiseled_stone_bricks")
+    )
+)
+
 for ($index = 0; $index -lt $buriedCoinSites.Count; $index++) {
     Write-Site "buried_coin_ruin/site_$($index + 1)" $buriedCoinSites[$index]
 }
@@ -306,4 +377,10 @@ for ($index = 0; $index -lt $badlandsSites.Count; $index++) {
 }
 for ($index = 0; $index -lt $shorelineSites.Count; $index++) {
     Write-Site "shoreline_relic_cache/site_$($index + 1)" $shorelineSites[$index]
+}
+for ($index = 0; $index -lt $frozenFossilSites.Count; $index++) {
+    Write-Site "frozen_fossil_site/site_$($index + 1)" $frozenFossilSites[$index] @(7, 2, 7)
+}
+for ($index = 0; $index -lt $jungleIdolSites.Count; $index++) {
+    Write-Site "jungle_idol_shrine/site_$($index + 1)" $jungleIdolSites[$index] @(7, 2, 7)
 }

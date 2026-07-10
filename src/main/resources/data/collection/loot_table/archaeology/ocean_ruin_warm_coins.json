@@ -7,6 +7,8 @@
         { "type": "minecraft:item", "name": "collection:relic/scarab_pendant", "weight": 4 },
         { "type": "minecraft:item", "name": "collection:relic/turquoise_ring", "weight": 4 },
         { "type": "minecraft:item", "name": "collection:relic/silver_locket", "weight": 3 },
+        { "type": "minecraft:item", "name": "collection:fossil/ammonite_fossil", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:fossil/amber_fossil", "weight": 2 },
         { "type": "minecraft:item", "name": "collection:coin/coin_25cent_1792", "weight": 1 }
       ]
     }

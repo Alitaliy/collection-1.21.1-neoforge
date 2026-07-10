@@ -7,6 +7,8 @@
         { "type": "minecraft:item", "name": "collection:arrowhead/flint_arrowhead", "weight": 4 },
         { "type": "minecraft:item", "name": "collection:arrowhead/bone_arrowhead", "weight": 3 },
         { "type": "minecraft:item", "name": "collection:arrowhead/obsidian_arrowhead", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:fossil/rib_fragment", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:effigy/jade_effigy", "weight": 1 },
         { "type": "minecraft:item", "name": "collection:coin/coin_1cent_1789", "weight": 1 }
       ]
     }

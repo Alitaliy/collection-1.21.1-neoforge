@@ -7,6 +7,8 @@
         { "type": "minecraft:item", "name": "collection:coin/coin_1cent_1789", "weight": 3 },
         { "type": "minecraft:item", "name": "collection:coin/coin_nickel_1792", "weight": 3 },
         { "type": "minecraft:item", "name": "collection:coin/coin_25cent_1792", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:effigy/sun_idol", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:effigy/obsidian_talisman", "weight": 1 },
         { "type": "minecraft:item", "name": "collection:relic/scarab_pendant", "weight": 2 },
         { "type": "minecraft:item", "name": "collection:relic/silver_locket", "weight": 1 }
       ]

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "collection:fossil/ammonite_fossil", "weight": 4 },
+        { "type": "minecraft:item", "name": "collection:fossil/rib_fragment", "weight": 4 },
+        { "type": "minecraft:item", "name": "collection:fossil/amber_fossil", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:relic/silver_locket", "weight": 1 }
+      ]
+    }
+  ],
+  "random_sequence": "collection:archaeology/frozen_fossil_site_common"
+}

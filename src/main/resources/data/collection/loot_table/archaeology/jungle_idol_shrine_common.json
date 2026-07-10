@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "collection:effigy/jade_effigy", "weight": 4 },
+        { "type": "minecraft:item", "name": "collection:effigy/sun_idol", "weight": 3 },
+        { "type": "minecraft:item", "name": "collection:effigy/obsidian_talisman", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:relic/scarab_pendant", "weight": 1 }
+      ]
+    }
+  ],
+  "random_sequence": "collection:archaeology/jungle_idol_shrine_common"
+}

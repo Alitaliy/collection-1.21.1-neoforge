@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "collection:fossil/ammonite_fossil",
+    "collection:fossil/amber_fossil",
+    "collection:fossil/rib_fragment"
+  ]
+}

@@ -14,9 +14,11 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 public final class PlayerCollectionProgress implements INBTSerializable<CompoundTag> {
     private static final String DISCOVERED_KEY = "Discovered";
     private static final String REWARDED_KEY = "Rewarded";
+    private static final String MILESTONES_KEY = "Milestones";
 
     private final Set<String> discovered = new HashSet<>();
     private final Set<String> rewardedSets = new HashSet<>();
+    private final Set<String> claimedMilestones = new HashSet<>();
 
     public boolean discover(ResourceLocation collectibleId) {
         return this.discovered.add(collectibleId.toString());
@@ -42,6 +44,14 @@ public final class PlayerCollectionProgress implements INBTSerializable<Compound
         return this.rewardedSets.contains(setId);
     }
 
+    public boolean claimMilestone(String setId, int stage) {
+        return this.claimedMilestones.add(setId + "#" + stage);
+    }
+
+    public boolean hasClaimedMilestone(String setId, int stage) {
+        return this.claimedMilestones.contains(setId + "#" + stage);
+    }
+
     public int discoveredTotal() {
         return this.discovered.size();
     }
@@ -54,11 +64,16 @@ public final class PlayerCollectionProgress implements INBTSerializable<Compound
         return Set.copyOf(this.rewardedSets);
     }
 
+    public Set<String> milestoneEntries() {
+        return Set.copyOf(this.claimedMilestones);
+    }
+
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         tag.put(DISCOVERED_KEY, this.writeStringList(this.discovered));
         tag.put(REWARDED_KEY, this.writeStringList(this.rewardedSets));
+        tag.put(MILESTONES_KEY, this.writeStringList(this.claimedMilestones));
         return tag;
     }
 
@@ -66,8 +81,10 @@ public final class PlayerCollectionProgress implements INBTSerializable<Compound
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
         this.discovered.clear();
         this.rewardedSets.clear();
+        this.claimedMilestones.clear();
         this.readStringList(nbt.getList(DISCOVERED_KEY, Tag.TAG_STRING), this.discovered);
         this.readStringList(nbt.getList(REWARDED_KEY, Tag.TAG_STRING), this.rewardedSets);
+        this.readStringList(nbt.getList(MILESTONES_KEY, Tag.TAG_STRING), this.claimedMilestones);
     }
 
     private ListTag writeStringList(Set<String> values) {

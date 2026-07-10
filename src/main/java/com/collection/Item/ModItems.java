@@ -28,9 +28,19 @@ public final class ModItems {
     public static final DeferredItem<Item> TURQUOISE_RING = collectible("relic/turquoise_ring");
     public static final DeferredItem<Item> SILVER_LOCKET = collectible("relic/silver_locket");
 
+    public static final DeferredItem<Item> AMMONITE_FOSSIL = collectible("fossil/ammonite_fossil");
+    public static final DeferredItem<Item> AMBER_FOSSIL = collectible("fossil/amber_fossil");
+    public static final DeferredItem<Item> RIB_FRAGMENT = collectible("fossil/rib_fragment");
+
+    public static final DeferredItem<Item> JADE_EFFIGY = collectible("effigy/jade_effigy");
+    public static final DeferredItem<Item> SUN_IDOL = collectible("effigy/sun_idol");
+    public static final DeferredItem<Item> OBSIDIAN_TALISMAN = collectible("effigy/obsidian_talisman");
+
     public static final DeferredItem<Item> COIN_DISPLAY_CASE = reward("reward/coin_display_case");
     public static final DeferredItem<Item> ARROWHEAD_DISPLAY_CASE = reward("reward/arrowhead_display_case");
     public static final DeferredItem<Item> RELIC_LEDGER = reward("reward/relic_ledger");
+    public static final DeferredItem<Item> FOSSIL_DISPLAY_RACK = reward("reward/fossil_display_rack");
+    public static final DeferredItem<Item> SHRINE_RECORD = reward("reward/shrine_record");
 
     private ModItems() {
     }

@@ -7,6 +7,8 @@
         { "type": "minecraft:item", "name": "collection:arrowhead/obsidian_arrowhead", "weight": 4 },
         { "type": "minecraft:item", "name": "collection:arrowhead/bone_arrowhead", "weight": 3 },
         { "type": "minecraft:item", "name": "collection:arrowhead/flint_arrowhead", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:fossil/amber_fossil", "weight": 2 },
+        { "type": "minecraft:item", "name": "collection:effigy/obsidian_talisman", "weight": 2 },
         { "type": "minecraft:item", "name": "collection:relic/silver_locket", "weight": 1 }
       ]
     }
