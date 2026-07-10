@@ -1,0 +1,23 @@
+{
+  "parent": "collection:first_discovery",
+  "display": {
+    "icon": {
+      "id": "collection:reward/arrowhead_display_case"
+    },
+    "title": {
+      "translate": "advancement.collection.complete_arrowheads.title"
+    },
+    "description": {
+      "translate": "advancement.collection.complete_arrowheads.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

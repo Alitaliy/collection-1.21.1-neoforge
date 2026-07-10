@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.3.0
+
+发布日期：2026-07-10
+
+### 新增内容
+
+- 将三类自定义发掘点升级为真正的 `NBT / 结构池` 遗迹：
+  - `collection:buried_coin_ruin`
+  - `collection:badlands_arrowhead_site`
+  - `collection:shoreline_relic_cache`
+- 新增收藏家手册 GUI：
+  - 分页总览页
+  - 套组详情页
+  - 缺失条目与线索显示
+- 新增线索地图功能，潜行使用手册可直接领取对应未完成套组的地图。
+- 新增客户端进度同步，用于 GUI 和地图线索展示。
+- 新增收藏家成就链，包括首次发现、各套组完成与总收藏完成。
+
+### 玩法与系统调整
+
+- 自定义遗迹不再通过 biome modifier + placed feature 生成，而是改为可定位、可放置、可复用的原版结构系统。
+- 手册的普通右键行为由聊天栏输出改为打开 GUI；潜行右键行为改为领取线索地图。
+- 文档与验证命令同步切换为 `/locate structure` 与 `/place structure`。
+- 独立美术资源继续沿用原版素材，本次版本专注功能闭环。
+
+### 工程与发布整理
+
+- 新增 `scripts/generate_structures.ps1`，用于重新生成自定义遗迹的 `.nbt` 模板。
+- 版本号从 `0.2.0` 升级为 `0.3.0`。
+- 更新 README、Release Notes 与版本历史说明。
+
 ## 0.2.0
 
 发布日期：2026-07-10

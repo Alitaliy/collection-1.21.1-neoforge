@@ -1,5 +1,6 @@
 package com.collection.Item;
 
+import com.collection.CollectionClient;
 import com.collection.progress.CollectionProgressService;
 import java.util.List;
 import net.minecraft.ChatFormatting;
@@ -21,8 +22,16 @@ public final class CollectorJournalItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, net.minecraft.world.entity.player.Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
-        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            CollectionProgressService.showJournal(serverPlayer, player.isShiftKeyDown());
+        if (level.isClientSide) {
+            if (!player.isShiftKeyDown()) {
+                CollectionClient.openJournalScreen();
+            }
+        } else if (player instanceof ServerPlayer serverPlayer) {
+            if (player.isShiftKeyDown()) {
+                CollectionProgressService.giveClueMap(serverPlayer);
+            } else {
+                CollectionProgressService.syncInventory(serverPlayer, false);
+            }
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
@@ -30,6 +39,6 @@ public final class CollectorJournalItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("collection.journal.tooltip.summary").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("collection.journal.tooltip.details").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("collection.journal.tooltip.map").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

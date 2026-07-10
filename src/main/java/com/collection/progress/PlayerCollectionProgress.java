@@ -42,6 +42,18 @@ public final class PlayerCollectionProgress implements INBTSerializable<Compound
         return this.rewardedSets.contains(setId);
     }
 
+    public int discoveredTotal() {
+        return this.discovered.size();
+    }
+
+    public Set<String> discoveredEntries() {
+        return Set.copyOf(this.discovered);
+    }
+
+    public Set<String> rewardedEntries() {
+        return Set.copyOf(this.rewardedSets);
+    }
+
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();

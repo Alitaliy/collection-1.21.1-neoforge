@@ -1,0 +1,23 @@
+{
+  "parent": "collection:first_discovery",
+  "display": {
+    "icon": {
+      "id": "collection:journal/collector_journal"
+    },
+    "title": {
+      "translate": "advancement.collection.master_collector.title"
+    },
+    "description": {
+      "translate": "advancement.collection.master_collector.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
