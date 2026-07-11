@@ -50,23 +50,25 @@ public final class CollectorJournalScreen extends Screen {
         Player player = this.minecraft != null ? this.minecraft.player : null;
 
         guiGraphics.fillGradient(left - 4, top - 4, left + PAGE_WIDTH + 4, top + PAGE_HEIGHT + 4, 0xCC23150F, 0xCC130B07);
-        guiGraphics.fill(left, top, left + PAGE_WIDTH, top + PAGE_HEIGHT, 0xF3E9D4);
-        guiGraphics.fill(left + 8, top + 22, left + PAGE_WIDTH - 8, top + PAGE_HEIGHT - 32, 0x33AA8B5D);
+        // GuiGraphics uses ARGB colors. Supplying a six-digit RGB value makes the
+        // alpha channel zero, which left the journal completely transparent.
+        guiGraphics.fill(left, top, left + PAGE_WIDTH, top + PAGE_HEIGHT, 0xFFF3E9D4);
+        guiGraphics.fill(left + 8, top + 22, left + PAGE_WIDTH - 8, top + PAGE_HEIGHT - 32, 0xFFDED0B7);
 
         if (player == null) {
-            guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.empty"), left + PAGE_WIDTH / 2, top + 80, 0x4A3425);
+            guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.empty"), left + PAGE_WIDTH / 2, top + 80, 0xFF4A3425);
             super.render(guiGraphics, mouseX, mouseY, partialTick);
             return;
         }
 
         PlayerCollectionProgress progress = player.getData(ModAttachments.PLAYER_COLLECTION_PROGRESS);
-        guiGraphics.drawCenteredString(this.font, this.title, left + PAGE_WIDTH / 2, top + 10, 0x4A3425);
+        guiGraphics.drawCenteredString(this.font, this.title, left + PAGE_WIDTH / 2, top + 10, 0xFF4A3425);
         guiGraphics.drawCenteredString(
                 this.font,
                 Component.translatable("collection.journal.screen.page", this.pageIndex + 1, this.pageCount()),
                 left + PAGE_WIDTH / 2,
                 top + PAGE_HEIGHT - 18,
-                0x6B4F3D
+                0xFF6B4F3D
         );
 
         if (this.pageIndex == 0) {
@@ -88,13 +90,13 @@ public final class CollectorJournalScreen extends Screen {
         long dayTime = this.minecraft != null && this.minecraft.level != null ? this.minecraft.level.getDayTime() : 0L;
         CollectibleSetDefinition featuredSet = CollectibleCatalog.featuredSetForDay(dayTime);
 
-        guiGraphics.drawString(this.font, Component.translatable("collection.journal.screen.summary"), left + 16, top + 32, 0x4A3425, false);
+        guiGraphics.drawString(this.font, Component.translatable("collection.journal.screen.summary"), left + 16, top + 32, 0xFF4A3425, false);
         guiGraphics.drawString(
                 this.font,
                 Component.translatable("collection.journal.screen.total", progress.discoveredTotal(), CollectibleCatalog.COLLECTIBLES.size()),
                 left + 16,
                 top + 46,
-                0x4A3425,
+                0xFF4A3425,
                 false
         );
         guiGraphics.drawString(
@@ -102,7 +104,7 @@ public final class CollectorJournalScreen extends Screen {
                 Component.translatable("collection.journal.screen.featured", featuredSet.name()),
                 left + 16,
                 top + 58,
-                0x6B4F3D,
+                0xFF6B4F3D,
                 false
         );
         guiGraphics.drawString(
@@ -110,7 +112,7 @@ public final class CollectorJournalScreen extends Screen {
                 Component.translatable("collection.journal.screen.featured_bonus"),
                 left + 16,
                 top + 70,
-                0x6B4F3D,
+                0xFF6B4F3D,
                 false
         );
 
@@ -118,13 +120,13 @@ public final class CollectorJournalScreen extends Screen {
         for (CollectibleSetDefinition set : CollectibleCatalog.SETS) {
             int discovered = progress.discoveredCount(set);
             guiGraphics.renderFakeItem(set.createRewardStack(), left + 16, rowY - 4);
-            guiGraphics.drawString(this.font, set.name(), left + 38, rowY, 0x4A3425, false);
+            guiGraphics.drawString(this.font, set.name(), left + 38, rowY, 0xFF4A3425, false);
             guiGraphics.drawString(
                     this.font,
                     Component.literal(discovered + "/" + set.size() + (progress.hasClaimedReward(set.id()) ? " ✓" : "")),
                     left + PAGE_WIDTH - 48,
                     rowY,
-                    progress.hasClaimedReward(set.id()) ? 0x2E6A34 : 0x6B4F3D,
+                    progress.hasClaimedReward(set.id()) ? 0xFF2E6A34 : 0xFF6B4F3D,
                     false
             );
 
@@ -141,7 +143,7 @@ public final class CollectorJournalScreen extends Screen {
             PlayerCollectionProgress progress,
             CollectibleSetDefinition set
     ) {
-        guiGraphics.drawString(this.font, set.name(), left + 16, top + 32, 0x4A3425, false);
+        guiGraphics.drawString(this.font, set.name(), left + 16, top + 32, 0xFF4A3425, false);
         guiGraphics.renderFakeItem(set.createRewardStack(), left + PAGE_WIDTH - 34, top + 28);
 
         int rowY = top + 58;
@@ -154,7 +156,7 @@ public final class CollectorJournalScreen extends Screen {
             int iconY = rowY + index * 34;
 
             guiGraphics.renderFakeItem(stack, iconX, iconY);
-            guiGraphics.drawString(this.font, collectible.name(), iconX + 24, iconY + 1, 0x4A3425, false);
+            guiGraphics.drawString(this.font, collectible.name(), iconX + 24, iconY + 1, 0xFF4A3425, false);
             guiGraphics.drawString(
                     this.font,
                     found
@@ -162,12 +164,12 @@ public final class CollectorJournalScreen extends Screen {
                             : Component.translatable("collection.journal.item_missing", collectible.name()).withStyle(ChatFormatting.DARK_RED),
                     iconX + 24,
                     iconY + 13,
-                    0x4A3425,
+                    0xFF4A3425,
                     false
             );
 
             if (!found) {
-                guiGraphics.drawWordWrap(this.font, Component.translatable("collection.journal.clue", collectible.clue()), iconX + 24, iconY + 24, 188, 0x6B4F3D);
+                guiGraphics.drawWordWrap(this.font, Component.translatable("collection.journal.clue", collectible.clue()), iconX + 24, iconY + 24, 188, 0xFF6B4F3D);
             }
 
             if (mouseX >= iconX && mouseX <= iconX + 16 && mouseY >= iconY && mouseY <= iconY + 16) {
@@ -177,13 +179,13 @@ public final class CollectorJournalScreen extends Screen {
 
         long dayTime = this.minecraft != null && this.minecraft.level != null ? this.minecraft.level.getDayTime() : 0L;
         if (CollectibleCatalog.featuredSetForDay(dayTime).id().equals(set.id())) {
-            guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.featured_page"), left + PAGE_WIDTH / 2, top + PAGE_HEIGHT - 56, 0x8A6B2F);
+            guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.featured_page"), left + PAGE_WIDTH / 2, top + PAGE_HEIGHT - 56, 0xFF8A6B2F);
         }
         Component status = progress.isSetComplete(set)
                 ? Component.translatable("collection.journal.screen.complete").withStyle(ChatFormatting.DARK_GREEN)
                 : Component.translatable("collection.journal.screen.incomplete").withStyle(ChatFormatting.GOLD);
-        guiGraphics.drawCenteredString(this.font, status, left + PAGE_WIDTH / 2, top + PAGE_HEIGHT - 44, 0x4A3425);
-        guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.map_hint"), left + PAGE_WIDTH / 2, top + PAGE_HEIGHT - 32, 0x6B4F3D);
+        guiGraphics.drawCenteredString(this.font, status, left + PAGE_WIDTH / 2, top + PAGE_HEIGHT - 44, 0xFF4A3425);
+        guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.map_hint"), left + PAGE_WIDTH / 2, top + PAGE_HEIGHT - 32, 0xFF6B4F3D);
     }
 
     private void changePage(int delta) {

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.1
+
+Release date: 2026-07-11
+
+### Fixes
+
+- Fixed custom structure template NBT encoding so located structures now place correctly in the world.
+- Regenerated all shipped structure templates for the five custom archaeology sites.
+- Fixed Collector Journal ARGB text and panel colors so the GUI renders visibly in-game.
+
 ## 0.4.0
 
 发布日期：2026-07-10

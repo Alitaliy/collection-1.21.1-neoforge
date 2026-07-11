@@ -3,15 +3,6 @@ $ErrorActionPreference = "Stop"
 $root = Join-Path $PSScriptRoot "..\src\main\resources\data\collection\structure"
 $dataVersion = 3955
 
-function New-IntArrayTag {
-    param([int[]]$Values)
-
-    return [ordered]@{
-        __type = "int_array"
-        values = $Values
-    }
-}
-
 function Get-TagType {
     param([object]$Value)
 
@@ -166,7 +157,7 @@ function New-StructureTag {
         }
 
         $entry = [ordered]@{
-            pos = New-IntArrayTag @($block.x, $block.y, $block.z)
+            pos = [int[]]@($block.x, $block.y, $block.z)
             state = [int]$paletteIndex[$stateName]
         }
         if ($null -ne $block.nbt) {
@@ -177,7 +168,7 @@ function New-StructureTag {
 
     return [ordered]@{
         DataVersion = $dataVersion
-        size = New-IntArrayTag $Size
+        size = [int[]]@($Size)
         palette = $palette.ToArray()
         blocks = $serializedBlocks.ToArray()
         entities = @()
