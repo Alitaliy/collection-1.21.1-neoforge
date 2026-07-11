@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.2
+
+Release date: 2026-07-11
+
+### UI
+
+- Reworked the Collector Journal into a handbook-style layout with a left navigation tab list and a dedicated right content page.
+- Removed the dimmed full-screen background effect when opening the journal.
+- Restyled the navigation controls to look like journal tabs instead of default Minecraft buttons.
+- Constrained clue text and set details so long localized lines no longer spill outside the page frame.
+
 ## 0.4.1
 
 Release date: 2026-07-11
