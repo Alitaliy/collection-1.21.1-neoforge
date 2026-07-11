@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.3
+
+Release date: 2026-07-11
+
+### UI
+
+- Fully disabled the default Minecraft screen background blur for the Collector Journal.
+- Fixed a detail-page layout overlap where the final collectible card could run into the page footer.
+- Added clipping around the detail card list so long translated clue text cannot draw outside the journal page.
+
 ## 0.4.2
 
 Release date: 2026-07-11

@@ -112,6 +112,18 @@ public final class CollectorJournalScreen extends Screen {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
+    @Override
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    }
+
+    @Override
+    protected void renderBlurredBackground(float partialTick) {
+    }
+
+    @Override
+    public void renderTransparentBackground(GuiGraphics guiGraphics) {
+    }
+
     private void renderJournalFrame(GuiGraphics guiGraphics, int left, int top) {
         int right = left + JOURNAL_WIDTH;
         int bottom = top + JOURNAL_HEIGHT;
@@ -240,14 +252,15 @@ public final class CollectorJournalScreen extends Screen {
             guiGraphics.drawString(this.font, Component.translatable("collection.journal.screen.featured_page"), contentLeft + 120, contentTop + 28, COLOR_WARN, false);
         }
 
-        int cardTop = contentTop + 48;
-        int cardHeight = 34;
+        int cardTop = contentTop + 46;
+        int cardHeight = 30;
         List<CollectibleDefinition> collectibles = set.collectibles();
+        guiGraphics.enableScissor(contentLeft - 6, cardTop - 6, contentRight - 4, top + JOURNAL_HEIGHT - 10);
         for (int index = 0; index < collectibles.size(); index++) {
             CollectibleDefinition collectible = collectibles.get(index);
             ItemStack stack = collectible.item().get().getDefaultInstance();
             boolean found = progress.hasDiscovered(collectible.id());
-            int cardY = cardTop + index * (cardHeight + 6);
+            int cardY = cardTop + index * (cardHeight + 4);
 
             guiGraphics.fill(contentLeft - 4, cardY - 4, contentRight - 4, cardY + cardHeight, COLOR_CARD);
             guiGraphics.fill(contentLeft - 4, cardY - 4, contentRight - 4, cardY - 3, COLOR_PAGE_DARK);
@@ -266,26 +279,21 @@ public final class CollectorJournalScreen extends Screen {
             );
 
             if (!found) {
-                this.drawWrappedLines(guiGraphics, collectible.clue(), iconX + 22, cardY + 24, CONTENT_WIDTH - 40, 2, COLOR_SUBTEXT);
-            }
-
-            if (mouseX >= iconX && mouseX <= iconX + 16 && mouseY >= iconY && mouseY <= iconY + 16) {
-                guiGraphics.renderTooltip(this.font, stack, mouseX, mouseY);
+                this.drawWrappedLines(guiGraphics, collectible.clue(), iconX + 22, cardY + 23, CONTENT_WIDTH - 40, 1, COLOR_SUBTEXT);
             }
         }
-
-        this.drawWrappedLines(
-                guiGraphics,
-                Component.translatable("collection.journal.screen.map_hint"),
-                contentLeft,
-                top + JOURNAL_HEIGHT - 34,
-                CONTENT_WIDTH - 8,
-                2,
-                COLOR_SUBTEXT
-        );
+        guiGraphics.disableScissor();
 
         if (mouseX >= contentRight - 26 && mouseX <= contentRight - 10 && mouseY >= contentTop - 2 && mouseY <= contentTop + 14) {
             guiGraphics.renderTooltip(this.font, rewardStack, mouseX, mouseY);
+        }
+        for (int index = 0; index < collectibles.size(); index++) {
+            int iconX = contentLeft;
+            int iconY = cardTop + index * (cardHeight + 4) + 6;
+            if (mouseX >= iconX && mouseX <= iconX + 16 && mouseY >= iconY && mouseY <= iconY + 16) {
+                ItemStack stack = collectibles.get(index).item().get().getDefaultInstance();
+                guiGraphics.renderTooltip(this.font, stack, mouseX, mouseY);
+            }
         }
     }
 
