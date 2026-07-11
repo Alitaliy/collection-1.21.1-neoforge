@@ -5,77 +5,43 @@ import com.collection.collectible.CollectibleDefinition;
 import com.collection.collectible.CollectibleSetDefinition;
 import com.collection.progress.ModAttachments;
 import com.collection.progress.PlayerCollectionProgress;
-import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.locale.Language;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.network.chat.FormattedText;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public final class CollectorJournalScreen extends Screen {
-    private static final int JOURNAL_WIDTH = 320;
-    private static final int JOURNAL_HEIGHT = 196;
-    private static final int NAV_WIDTH = 86;
-    private static final int INNER_PADDING = 10;
-    private static final int CONTENT_X = NAV_WIDTH + 16;
-    private static final int CONTENT_WIDTH = JOURNAL_WIDTH - CONTENT_X - INNER_PADDING;
-    private static final int CONTENT_HEIGHT = JOURNAL_HEIGHT - 34;
-    private static final int COLOR_SHADOW = 0x90150E09;
-    private static final int COLOR_COVER = 0xFF4B3326;
-    private static final int COLOR_PAGE = 0xFFF5ECD8;
-    private static final int COLOR_PAGE_DARK = 0xFFE3D4BA;
-    private static final int COLOR_NAV = 0xFFF0E2C8;
-    private static final int COLOR_NAV_ACTIVE = 0xFFD8C19A;
-    private static final int COLOR_NAV_HOVER = 0xFFE6D2AF;
-    private static final int COLOR_CARD = 0xFFF9F2E5;
-    private static final int COLOR_BORDER = 0xFF8B6A48;
-    private static final int COLOR_TEXT = 0xFF3C2C21;
-    private static final int COLOR_SUBTEXT = 0xFF6F573F;
+    private static final int BOOK_WIDTH = 396;
+    private static final int BOOK_HEIGHT = 224;
+    private static final int LEFT_PAGE_X = 24;
+    private static final int RIGHT_PAGE_X = 218;
+    private static final int PAGE_TOP = 18;
+    private static final int PAGE_WIDTH = 150;
+    private static final int PAGE_HEIGHT = 184;
+    private static final int LINE_HEIGHT = 11;
+    private static final int COLOR_SHADOW = 0xAA000000;
+    private static final int COLOR_COVER = 0xFF151419;
+    private static final int COLOR_COVER_EDGE = 0xFF2C2017;
+    private static final int COLOR_PAGE = 0xFFFFF8E4;
+    private static final int COLOR_PAGE_SHADE = 0xFFE8DDBF;
+    private static final int COLOR_PAGE_LINE = 0xFF9B927C;
+    private static final int COLOR_TEXT = 0xFF3A3027;
+    private static final int COLOR_MUTED = 0xFF6C5E4B;
+    private static final int COLOR_HOVER = 0xFFE7D9B4;
+    private static final int COLOR_PROGRESS_BACK = 0xFFC7C7C7;
+    private static final int COLOR_PROGRESS_FILL = 0xFFE6F23B;
+    private static final int COLOR_PROGRESS_FRAME = 0xFF3C342B;
     private static final int COLOR_GOOD = 0xFF2E6A34;
     private static final int COLOR_WARN = 0xFF8A6B2F;
 
-    private final List<Button> navigationButtons = new ArrayList<>();
     private int pageIndex;
 
     public CollectorJournalScreen() {
         super(Component.translatable("collection.journal.summary_header"));
-    }
-
-    @Override
-    protected void init() {
-        this.navigationButtons.clear();
-        this.buildNavigation();
-    }
-
-    private void buildNavigation() {
-        int left = this.pageLeft();
-        int top = this.pageTop();
-        int buttonX = left + 8;
-        int buttonWidth = NAV_WIDTH - 12;
-        int buttonY = top + 28;
-        int buttonHeight = 20;
-        int gap = 4;
-
-        this.addNavigationButton(buttonX, buttonY, buttonWidth, buttonHeight, Component.translatable("collection.journal.screen.summary"), 0);
-        buttonY += buttonHeight + gap;
-
-        for (int index = 0; index < CollectibleCatalog.SETS.size(); index++) {
-            this.addNavigationButton(buttonX, buttonY, buttonWidth, buttonHeight, CollectibleCatalog.SETS.get(index).name(), index + 1);
-            buttonY += buttonHeight + gap;
-        }
-
-        this.updateButtonState();
-    }
-
-    private void addNavigationButton(int x, int y, int width, int height, Component label, int targetPage) {
-        Button button = this.addRenderableWidget(new JournalNavButton(x, y, width, height, label, targetPage));
-        this.navigationButtons.add(button);
     }
 
     @Override
@@ -84,32 +50,56 @@ public final class CollectorJournalScreen extends Screen {
         int top = this.pageTop();
         Player player = this.minecraft != null ? this.minecraft.player : null;
 
-        this.renderJournalFrame(guiGraphics, left, top);
+        this.renderBook(guiGraphics, left, top);
 
         if (player == null) {
-            guiGraphics.drawCenteredString(this.font, Component.translatable("collection.journal.screen.empty"), left + JOURNAL_WIDTH / 2, top + 92, COLOR_TEXT);
-            super.render(guiGraphics, mouseX, mouseY, partialTick);
+            this.drawPageTitle(guiGraphics, left + LEFT_PAGE_X, top + PAGE_TOP, Component.translatable("collection.journal.summary_header"));
+            this.drawWrappedLines(guiGraphics, Component.translatable("collection.journal.screen.empty"), left + LEFT_PAGE_X + 6, top + PAGE_TOP + 30, PAGE_WIDTH - 12, 5, COLOR_TEXT);
             return;
         }
 
         PlayerCollectionProgress progress = player.getData(ModAttachments.PLAYER_COLLECTION_PROGRESS);
-        guiGraphics.drawCenteredString(this.font, this.title, left + JOURNAL_WIDTH / 2, top + 12, COLOR_TEXT);
-        guiGraphics.drawCenteredString(
-                this.font,
-                Component.translatable("collection.journal.screen.page", this.pageIndex + 1, this.pageCount()),
-                left + JOURNAL_WIDTH / 2,
-                top + JOURNAL_HEIGHT - 16,
-                COLOR_SUBTEXT
-        );
-
         if (this.pageIndex == 0) {
-            this.renderSummaryPage(guiGraphics, left, top, mouseX, mouseY, progress);
+            this.renderIndex(guiGraphics, left, top, mouseX, mouseY, progress);
         } else {
             CollectibleSetDefinition set = CollectibleCatalog.SETS.get(this.pageIndex - 1);
-            this.renderSetPage(guiGraphics, left, top, mouseX, mouseY, progress, set);
+            this.renderSet(guiGraphics, left, top, mouseX, mouseY, progress, set);
         }
 
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        this.renderPageArrows(guiGraphics, left, top, mouseX, mouseY);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button != 0) {
+            return super.mouseClicked(mouseX, mouseY, button);
+        }
+
+        int left = this.pageLeft();
+        int top = this.pageTop();
+        int previousX = left + 172;
+        int nextX = left + BOOK_WIDTH - 28;
+        int arrowY = top + BOOK_HEIGHT - 20;
+
+        if (this.isInside(mouseX, mouseY, previousX, arrowY, 18, 14)) {
+            this.changePage(-1);
+            return true;
+        }
+        if (this.isInside(mouseX, mouseY, nextX, arrowY, 18, 14)) {
+            this.changePage(1);
+            return true;
+        }
+
+        int chapterX = left + RIGHT_PAGE_X + 8;
+        int chapterY = top + PAGE_TOP + 32;
+        for (int index = 0; index < CollectibleCatalog.SETS.size(); index++) {
+            if (this.isInside(mouseX, mouseY, chapterX - 4, chapterY + index * 21 - 3, PAGE_WIDTH - 8, 18)) {
+                this.openPage(index + 1);
+                return true;
+            }
+        }
+
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
@@ -124,20 +114,47 @@ public final class CollectorJournalScreen extends Screen {
     public void renderTransparentBackground(GuiGraphics guiGraphics) {
     }
 
-    private void renderJournalFrame(GuiGraphics guiGraphics, int left, int top) {
-        int right = left + JOURNAL_WIDTH;
-        int bottom = top + JOURNAL_HEIGHT;
-
-        guiGraphics.fill(left - 6, top - 6, right + 6, bottom + 6, COLOR_SHADOW);
-        guiGraphics.fill(left, top, right, bottom, COLOR_COVER);
-        guiGraphics.fill(left + 4, top + 4, right - 4, bottom - 4, COLOR_PAGE_DARK);
-        guiGraphics.fill(left + 8, top + 8, left + NAV_WIDTH, bottom - 8, COLOR_NAV);
-        guiGraphics.fill(left + CONTENT_X - 6, top + 8, right - 8, bottom - 8, COLOR_PAGE);
-        guiGraphics.fill(left + CONTENT_X - 8, top + 8, left + CONTENT_X - 6, bottom - 8, COLOR_BORDER);
-        guiGraphics.fill(left + 8, top + 24, right - 8, top + 25, COLOR_BORDER);
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 
-    private void renderSummaryPage(
+    private void renderBook(GuiGraphics guiGraphics, int left, int top) {
+        int right = left + BOOK_WIDTH;
+        int bottom = top + BOOK_HEIGHT;
+        int spineX = left + BOOK_WIDTH / 2;
+
+        guiGraphics.fill(left - 5, top - 5, right + 5, bottom + 5, COLOR_SHADOW);
+        guiGraphics.fill(left, top, right, bottom, COLOR_COVER);
+        guiGraphics.fill(left + 6, top + 6, right - 6, bottom - 6, COLOR_COVER_EDGE);
+        guiGraphics.fill(left + 12, top + 12, spineX - 8, bottom - 12, COLOR_PAGE);
+        guiGraphics.fill(spineX + 8, top + 12, right - 12, bottom - 12, COLOR_PAGE);
+
+        guiGraphics.fill(spineX - 10, top + 14, spineX - 8, bottom - 14, COLOR_PAGE_SHADE);
+        guiGraphics.fill(spineX + 8, top + 14, spineX + 10, bottom - 14, COLOR_PAGE_SHADE);
+        guiGraphics.fill(left + 16, top + 32, spineX - 18, top + 35, COLOR_PAGE_LINE);
+        guiGraphics.fill(spineX + 20, top + 32, right - 20, top + 35, COLOR_PAGE_LINE);
+
+        for (int y = top + 20; y < bottom - 20; y += 12) {
+            guiGraphics.fill(spineX - 2, y, spineX + 2, y + 7, COLOR_COVER);
+        }
+
+        this.renderCorner(guiGraphics, left + 14, top + 14, 1, 1);
+        this.renderCorner(guiGraphics, spineX - 20, top + 14, -1, 1);
+        this.renderCorner(guiGraphics, spineX + 14, top + 14, 1, 1);
+        this.renderCorner(guiGraphics, right - 24, top + 14, -1, 1);
+        this.renderCorner(guiGraphics, left + 14, bottom - 24, 1, -1);
+        this.renderCorner(guiGraphics, right - 24, bottom - 24, -1, -1);
+    }
+
+    private void renderCorner(GuiGraphics guiGraphics, int x, int y, int sx, int sy) {
+        this.fillDirected(guiGraphics, x, y, x + sx * 10, y + sy, COLOR_PAGE_SHADE);
+        this.fillDirected(guiGraphics, x, y, x + sx, y + sy * 10, COLOR_PAGE_SHADE);
+        this.fillDirected(guiGraphics, x + sx * 3, y + sy * 3, x + sx * 7, y + sy * 4, COLOR_PAGE_SHADE);
+        this.fillDirected(guiGraphics, x + sx * 3, y + sy * 3, x + sx * 4, y + sy * 7, COLOR_PAGE_SHADE);
+    }
+
+    private void renderIndex(
             GuiGraphics guiGraphics,
             int left,
             int top,
@@ -145,70 +162,29 @@ public final class CollectorJournalScreen extends Screen {
             int mouseY,
             PlayerCollectionProgress progress
     ) {
-        int contentLeft = left + CONTENT_X;
-        int contentTop = top + 34;
-        int contentRight = left + JOURNAL_WIDTH - INNER_PADDING;
+        int leftX = left + LEFT_PAGE_X;
+        int rightX = left + RIGHT_PAGE_X;
+        int pageY = top + PAGE_TOP;
         long dayTime = this.minecraft != null && this.minecraft.level != null ? this.minecraft.level.getDayTime() : 0L;
         CollectibleSetDefinition featuredSet = CollectibleCatalog.featuredSetForDay(dayTime);
 
-        guiGraphics.drawString(this.font, Component.translatable("collection.journal.screen.summary"), contentLeft, contentTop, COLOR_TEXT, false);
-        guiGraphics.drawString(
-                this.font,
-                Component.translatable("collection.journal.screen.total", progress.discoveredTotal(), CollectibleCatalog.COLLECTIBLES.size()),
-                contentLeft,
-                contentTop + 14,
-                COLOR_TEXT,
-                false
-        );
-        guiGraphics.drawString(
-                this.font,
-                Component.translatable("collection.journal.screen.featured", featuredSet.name()),
-                contentLeft,
-                contentTop + 28,
-                COLOR_SUBTEXT,
-                false
-        );
-        this.drawWrappedLines(
-                guiGraphics,
-                Component.translatable("collection.journal.screen.featured_bonus"),
-                contentLeft,
-                contentTop + 42,
-                CONTENT_WIDTH - 8,
-                2,
-                COLOR_SUBTEXT
-        );
+        this.drawPageTitle(guiGraphics, leftX, pageY, Component.translatable("collection.journal.book.index"));
+        this.drawWrappedLines(guiGraphics, Component.translatable("collection.journal.book.index_body"), leftX + 6, pageY + 28, PAGE_WIDTH - 12, 8, COLOR_TEXT);
+        guiGraphics.drawString(this.font, Component.translatable("collection.journal.book.progress"), leftX + 6, pageY + 132, COLOR_TEXT, false);
+        this.drawProgressBar(guiGraphics, leftX + 8, pageY + 148, PAGE_WIDTH - 18, 14, progress.discoveredTotal(), CollectibleCatalog.COLLECTIBLES.size());
+        this.drawWrappedLines(guiGraphics, Component.translatable("collection.journal.screen.featured", featuredSet.name()), leftX + 6, pageY + 170, PAGE_WIDTH - 12, 2, COLOR_MUTED);
 
-        int listTop = contentTop + 70;
-        int rowHeight = 20;
+        this.drawPageTitle(guiGraphics, rightX, pageY, Component.translatable("collection.journal.book.chapters"));
+        int rowY = pageY + 32;
         for (int index = 0; index < CollectibleCatalog.SETS.size(); index++) {
             CollectibleSetDefinition set = CollectibleCatalog.SETS.get(index);
-            int rowY = listTop + index * (rowHeight + 4);
-            int discovered = progress.discoveredCount(set);
-            boolean claimed = progress.hasClaimedReward(set.id());
-
-            guiGraphics.fill(contentLeft - 4, rowY - 3, contentRight - 4, rowY + rowHeight - 1, COLOR_CARD);
-            guiGraphics.fill(contentLeft - 4, rowY - 3, contentRight - 4, rowY - 2, COLOR_PAGE_DARK);
-            guiGraphics.renderFakeItem(set.createRewardStack(), contentLeft, rowY);
-            guiGraphics.drawString(this.font, set.name(), contentLeft + 22, rowY + 4, COLOR_TEXT, false);
-
-            String progressText = discovered + "/" + set.size() + (claimed ? " [OK]" : "");
-            int progressWidth = this.font.width(progressText);
-            guiGraphics.drawString(
-                    this.font,
-                    Component.literal(progressText),
-                    contentRight - 10 - progressWidth,
-                    rowY + 4,
-                    claimed ? COLOR_GOOD : COLOR_SUBTEXT,
-                    false
-            );
-
-            if (mouseX >= contentLeft && mouseX <= contentLeft + 16 && mouseY >= rowY && mouseY <= rowY + 16) {
-                guiGraphics.renderTooltip(this.font, set.createRewardStack(), mouseX, mouseY);
-            }
+            int y = rowY + index * 21;
+            boolean hovered = this.isInside(mouseX, mouseY, rightX + 4, y - 3, PAGE_WIDTH - 8, 18);
+            this.renderSetChapterRow(guiGraphics, rightX, y, set, progress, index + 1, hovered);
         }
     }
 
-    private void renderSetPage(
+    private void renderSet(
             GuiGraphics guiGraphics,
             int left,
             int top,
@@ -217,120 +193,182 @@ public final class CollectorJournalScreen extends Screen {
             PlayerCollectionProgress progress,
             CollectibleSetDefinition set
     ) {
-        int contentLeft = left + CONTENT_X;
-        int contentTop = top + 34;
-        int contentRight = left + JOURNAL_WIDTH - INNER_PADDING;
+        int leftX = left + LEFT_PAGE_X;
+        int rightX = left + RIGHT_PAGE_X;
+        int pageY = top + PAGE_TOP;
         ItemStack rewardStack = set.createRewardStack();
+        int discovered = progress.discoveredCount(set);
         boolean complete = progress.isSetComplete(set);
         boolean claimed = progress.hasClaimedReward(set.id());
-        long dayTime = this.minecraft != null && this.minecraft.level != null ? this.minecraft.level.getDayTime() : 0L;
-        boolean featured = CollectibleCatalog.featuredSetForDay(dayTime).id().equals(set.id());
 
-        guiGraphics.drawString(this.font, set.name(), contentLeft, contentTop, COLOR_TEXT, false);
-        guiGraphics.renderFakeItem(rewardStack, contentRight - 26, contentTop - 2);
+        this.drawPageTitle(guiGraphics, leftX, pageY, set.name());
+        this.drawWrappedLines(
+                guiGraphics,
+                Component.translatable("collection.journal.book.set_body", set.name(), rewardStack.getHoverName()),
+                leftX + 6,
+                pageY + 28,
+                PAGE_WIDTH - 12,
+                7,
+                COLOR_TEXT
+        );
+        guiGraphics.renderFakeItem(rewardStack, leftX + 8, pageY + 104);
+        guiGraphics.drawString(this.font, rewardStack.getHoverName(), leftX + 30, pageY + 108, COLOR_TEXT, false);
         guiGraphics.drawString(
                 this.font,
                 claimed
                         ? Component.translatable("collection.journal.screen.reward_claimed", rewardStack.getHoverName())
                         : Component.translatable("collection.journal.screen.reward_missing"),
-                contentLeft,
-                contentTop + 14,
-                claimed ? COLOR_GOOD : COLOR_SUBTEXT,
+                leftX + 6,
+                pageY + 130,
+                claimed ? COLOR_GOOD : COLOR_MUTED,
                 false
         );
+        guiGraphics.drawString(this.font, Component.translatable("collection.journal.book.progress"), leftX + 6, pageY + 148, COLOR_TEXT, false);
+        this.drawProgressBar(guiGraphics, leftX + 8, pageY + 164, PAGE_WIDTH - 18, 14, discovered, set.size());
+
+        this.drawPageTitle(guiGraphics, rightX, pageY, Component.translatable("collection.journal.book.entries"));
+        int rowY = pageY + 32;
+        List<CollectibleDefinition> collectibles = set.collectibles();
+        for (int index = 0; index < collectibles.size(); index++) {
+            CollectibleDefinition collectible = collectibles.get(index);
+            int y = rowY + index * 36;
+            boolean hovered = this.isInside(mouseX, mouseY, rightX + 4, y - 4, PAGE_WIDTH - 8, 30);
+            this.renderCollectibleRow(guiGraphics, rightX, y, mouseX, mouseY, collectible, progress, hovered);
+        }
+
         guiGraphics.drawString(
                 this.font,
                 complete
                         ? Component.translatable("collection.journal.screen.complete")
                         : Component.translatable("collection.journal.screen.incomplete"),
-                contentLeft,
-                contentTop + 28,
+                rightX + 8,
+                pageY + 160,
                 complete ? COLOR_GOOD : COLOR_WARN,
                 false
         );
-        if (featured) {
-            guiGraphics.drawString(this.font, Component.translatable("collection.journal.screen.featured_page"), contentLeft + 120, contentTop + 28, COLOR_WARN, false);
-        }
 
-        int cardTop = contentTop + 46;
-        int cardHeight = 30;
-        List<CollectibleDefinition> collectibles = set.collectibles();
-        guiGraphics.enableScissor(contentLeft - 6, cardTop - 6, contentRight - 4, top + JOURNAL_HEIGHT - 10);
-        for (int index = 0; index < collectibles.size(); index++) {
-            CollectibleDefinition collectible = collectibles.get(index);
-            ItemStack stack = collectible.item().get().getDefaultInstance();
-            boolean found = progress.hasDiscovered(collectible.id());
-            int cardY = cardTop + index * (cardHeight + 4);
-
-            guiGraphics.fill(contentLeft - 4, cardY - 4, contentRight - 4, cardY + cardHeight, COLOR_CARD);
-            guiGraphics.fill(contentLeft - 4, cardY - 4, contentRight - 4, cardY - 3, COLOR_PAGE_DARK);
-
-            int iconX = contentLeft;
-            int iconY = cardY + 6;
-            guiGraphics.renderFakeItem(stack, iconX, iconY);
-            guiGraphics.drawString(this.font, collectible.name(), iconX + 22, cardY + 2, COLOR_TEXT, false);
-            guiGraphics.drawString(
-                    this.font,
-                    found ? Component.translatable("collection.journal.item_found", collectible.name()) : Component.translatable("collection.journal.item_missing", collectible.name()),
-                    iconX + 22,
-                    cardY + 14,
-                    found ? COLOR_GOOD : COLOR_SUBTEXT,
-                    false
-            );
-
-            if (!found) {
-                this.drawWrappedLines(guiGraphics, collectible.clue(), iconX + 22, cardY + 23, CONTENT_WIDTH - 40, 1, COLOR_SUBTEXT);
-            }
-        }
-        guiGraphics.disableScissor();
-
-        if (mouseX >= contentRight - 26 && mouseX <= contentRight - 10 && mouseY >= contentTop - 2 && mouseY <= contentTop + 14) {
+        if (mouseX >= leftX + 8 && mouseX <= leftX + 24 && mouseY >= pageY + 104 && mouseY <= pageY + 120) {
             guiGraphics.renderTooltip(this.font, rewardStack, mouseX, mouseY);
-        }
-        for (int index = 0; index < collectibles.size(); index++) {
-            int iconX = contentLeft;
-            int iconY = cardTop + index * (cardHeight + 4) + 6;
-            if (mouseX >= iconX && mouseX <= iconX + 16 && mouseY >= iconY && mouseY <= iconY + 16) {
-                ItemStack stack = collectibles.get(index).item().get().getDefaultInstance();
-                guiGraphics.renderTooltip(this.font, stack, mouseX, mouseY);
-            }
         }
     }
 
-    private void drawWrappedLines(
+    private void renderSetChapterRow(
             GuiGraphics guiGraphics,
-            Component component,
             int x,
             int y,
-            int width,
-            int maxLines,
-            int color
+            CollectibleSetDefinition set,
+            PlayerCollectionProgress progress,
+            int targetPage,
+            boolean hovered
     ) {
+        if (hovered || this.pageIndex == targetPage) {
+            guiGraphics.fill(x + 2, y - 4, x + PAGE_WIDTH - 4, y + 16, COLOR_HOVER);
+        }
+
+        ItemStack rewardStack = set.createRewardStack();
+        int discovered = progress.discoveredCount(set);
+        boolean complete = progress.isSetComplete(set);
+        guiGraphics.renderFakeItem(rewardStack, x + 8, y - 3);
+        guiGraphics.drawString(this.font, set.name(), x + 30, y, COLOR_TEXT, false);
+        guiGraphics.drawString(this.font, Component.literal(discovered + "/" + set.size()), x + PAGE_WIDTH - 28, y, complete ? COLOR_GOOD : COLOR_MUTED, false);
+    }
+
+    private void renderCollectibleRow(
+            GuiGraphics guiGraphics,
+            int x,
+            int y,
+            int mouseX,
+            int mouseY,
+            CollectibleDefinition collectible,
+            PlayerCollectionProgress progress,
+            boolean hovered
+    ) {
+        if (hovered) {
+            guiGraphics.fill(x + 2, y - 4, x + PAGE_WIDTH - 4, y + 30, COLOR_HOVER);
+        }
+
+        ItemStack stack = collectible.item().get().getDefaultInstance();
+        boolean found = progress.hasDiscovered(collectible.id());
+        guiGraphics.renderFakeItem(stack, x + 8, y - 2);
+        guiGraphics.drawString(this.font, stack.getHoverName(), x + 30, y, COLOR_TEXT, false);
+        guiGraphics.drawString(
+                this.font,
+                found
+                        ? Component.translatable("collection.journal.item_found", stack.getHoverName())
+                        : Component.translatable("collection.journal.item_missing", stack.getHoverName()),
+                x + 30,
+                y + 12,
+                found ? COLOR_GOOD : COLOR_MUTED,
+                false
+        );
+
+        if (hovered) {
+            guiGraphics.renderTooltip(this.font, List.of(stack.getHoverName(), Component.translatable("collection.journal.clue", collectible.clue())), stack.getTooltipImage(), stack, mouseX, mouseY);
+        }
+    }
+
+    private void renderPageArrows(GuiGraphics guiGraphics, int left, int top, int mouseX, int mouseY) {
+        int previousX = left + 172;
+        int nextX = left + BOOK_WIDTH - 28;
+        int y = top + BOOK_HEIGHT - 20;
+        int previousColor = this.pageIndex > 0 ? COLOR_PAGE : COLOR_PAGE_SHADE;
+        int nextColor = this.pageIndex < this.pageCount() - 1 ? COLOR_PAGE : COLOR_PAGE_SHADE;
+
+        this.drawArrow(guiGraphics, previousX, y, false, previousColor);
+        this.drawArrow(guiGraphics, nextX, y, true, nextColor);
+    }
+
+    private void drawArrow(GuiGraphics guiGraphics, int x, int y, boolean right, int color) {
+        if (right) {
+            guiGraphics.fill(x, y + 5, x + 12, y + 9, color);
+            guiGraphics.fill(x + 8, y + 2, x + 16, y + 12, color);
+            guiGraphics.fill(x + 12, y, x + 18, y + 14, color);
+            guiGraphics.fill(x, y + 9, x + 12, y + 11, COLOR_PROGRESS_FRAME);
+            return;
+        }
+
+        guiGraphics.fill(x - 12, y + 5, x, y + 9, color);
+        guiGraphics.fill(x - 16, y + 2, x - 8, y + 12, color);
+        guiGraphics.fill(x - 18, y, x - 12, y + 14, color);
+        guiGraphics.fill(x - 12, y + 9, x, y + 11, COLOR_PROGRESS_FRAME);
+    }
+
+    private void fillDirected(GuiGraphics guiGraphics, int x1, int y1, int x2, int y2, int color) {
+        guiGraphics.fill(Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2), Math.max(y1, y2), color);
+    }
+
+    private void drawPageTitle(GuiGraphics guiGraphics, int x, int y, Component title) {
+        guiGraphics.drawCenteredString(this.font, title, x + PAGE_WIDTH / 2, y, COLOR_TEXT);
+        guiGraphics.fill(x + 8, y + 16, x + PAGE_WIDTH - 8, y + 18, COLOR_PAGE_LINE);
+    }
+
+    private void drawProgressBar(GuiGraphics guiGraphics, int x, int y, int width, int height, int value, int max) {
+        int innerWidth = width - 4;
+        int fillWidth = max <= 0 ? 0 : Mth.clamp(value * innerWidth / max, 0, innerWidth);
+
+        guiGraphics.fill(x, y, x + width, y + height, COLOR_PROGRESS_FRAME);
+        guiGraphics.fill(x + 2, y + 2, x + width - 2, y + height - 2, COLOR_PROGRESS_BACK);
+        guiGraphics.fill(x + 2, y + 2, x + 2 + fillWidth, y + height - 2, COLOR_PROGRESS_FILL);
+    }
+
+    private void drawWrappedLines(GuiGraphics guiGraphics, Component component, int x, int y, int width, int maxLines, int color) {
         List<FormattedCharSequence> lines = this.font.split(component, width);
         int lineCount = Math.min(lines.size(), maxLines);
         for (int index = 0; index < lineCount; index++) {
-            guiGraphics.drawString(this.font, lines.get(index), x, y + index * 10, color, false);
+            guiGraphics.drawString(this.font, lines.get(index), x, y + index * LINE_HEIGHT, color, false);
         }
+    }
+
+    private void changePage(int delta) {
+        this.openPage(this.pageIndex + delta);
     }
 
     private void openPage(int targetPage) {
         this.pageIndex = Mth.clamp(targetPage, 0, this.pageCount() - 1);
-        this.updateButtonState();
     }
 
-    private void updateButtonState() {
-        for (int index = 0; index < this.navigationButtons.size(); index++) {
-            Button button = this.navigationButtons.get(index);
-            boolean active = index != this.pageIndex;
-            button.active = active;
-            button.visible = true;
-            button.setAlpha(active ? 1.0F : 0.85F);
-        }
-    }
-
-    @Override
-    public boolean isPauseScreen() {
-        return false;
+    private boolean isInside(double mouseX, double mouseY, int x, int y, int width, int height) {
+        return mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
     }
 
     private int pageCount() {
@@ -338,50 +376,10 @@ public final class CollectorJournalScreen extends Screen {
     }
 
     private int pageLeft() {
-        return (this.width - JOURNAL_WIDTH) / 2;
+        return (this.width - BOOK_WIDTH) / 2;
     }
 
     private int pageTop() {
-        return (this.height - JOURNAL_HEIGHT) / 2;
-    }
-
-    private final class JournalNavButton extends Button {
-        private final int targetPage;
-
-        private JournalNavButton(int x, int y, int width, int height, Component message, int targetPage) {
-            super(x, y, width, height, message, ignored -> CollectorJournalScreen.this.openPage(targetPage), DEFAULT_NARRATION);
-            this.targetPage = targetPage;
-        }
-
-        @Override
-        protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-            boolean selected = CollectorJournalScreen.this.pageIndex == this.targetPage;
-            int backgroundColor = selected ? COLOR_NAV_ACTIVE : (this.isHovered() ? COLOR_NAV_HOVER : COLOR_NAV);
-            int left = this.getX();
-            int top = this.getY();
-            int right = left + this.width;
-            int bottom = top + this.height;
-
-            guiGraphics.fill(left, top, right, bottom, backgroundColor);
-            guiGraphics.fill(left, top, right, top + 1, COLOR_BORDER);
-            guiGraphics.fill(left, bottom - 1, right, bottom, COLOR_BORDER);
-            guiGraphics.fill(left, top, left + 1, bottom, COLOR_BORDER);
-            guiGraphics.fill(right - 1, top, right, bottom, COLOR_BORDER);
-
-            if (selected) {
-                guiGraphics.fill(right - 2, top + 2, right, bottom - 2, COLOR_PAGE);
-            }
-
-            FormattedText trimmedText = CollectorJournalScreen.this.font.substrByWidth(this.getMessage(), this.width - 12);
-            FormattedCharSequence trimmed = Language.getInstance().getVisualOrder(trimmedText);
-            int textWidth = CollectorJournalScreen.this.font.width(trimmed);
-            int textX = left + 6;
-            int textY = top + (this.height - 8) / 2;
-            if (textWidth < this.width - 12) {
-                textX = left + (this.width - textWidth) / 2;
-            }
-
-            guiGraphics.drawString(CollectorJournalScreen.this.font, trimmed, textX, textY, COLOR_TEXT, false);
-        }
+        return (this.height - BOOK_HEIGHT) / 2;
     }
 }

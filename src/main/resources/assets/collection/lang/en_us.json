@@ -71,6 +71,12 @@
   "collection.journal.screen.featured": "Today's lead: %s",
   "collection.journal.screen.featured_bonus": "Finish today's lead for a 5-emerald bonus.",
   "collection.journal.screen.featured_page": "Today's featured lead",
+  "collection.journal.book.index": "Index",
+  "collection.journal.book.chapters": "Chapters",
+  "collection.journal.book.entries": "Entries",
+  "collection.journal.book.progress": "Unlock progress:",
+  "collection.journal.book.index_body": "This page lists every chapter in the Collector's Journal. Select a chapter on the right page to review its set, reward, and tracked finds.",
+  "collection.journal.book.set_body": "This chapter records discoveries for %s. Complete the full set to receive the reward: %s.",
 
   "collection.progress.discovered": "Discovered collectible: %s",
   "collection.progress.reward_granted": "Completed %s and received %s",

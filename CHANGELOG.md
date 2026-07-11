@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.4
+
+Release date: 2026-07-11
+
+### UI
+
+- Rebuilt the Collector Journal as a two-page handbook inspired by classic mod guide books.
+- Moved set navigation into the right page chapter list with click-to-open entries.
+- Moved set descriptions, reward preview, and progress bars onto the left page.
+- Kept collectible clues inside hover tooltips so long localized text no longer spills outside the page.
+- Added book frame, page divider, stitched spine, corner details, and page arrows drawn directly in the GUI.
+
 ## 0.4.3
 
 Release date: 2026-07-11

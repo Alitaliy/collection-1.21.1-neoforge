@@ -71,6 +71,12 @@
   "collection.journal.screen.featured": "今日线索：%s",
   "collection.journal.screen.featured_bonus": "在今日线索轮值内完成套组可额外获得5颗绿宝石。",
   "collection.journal.screen.featured_page": "今日推荐线索",
+  "collection.journal.book.index": "总目录",
+  "collection.journal.book.chapters": "章节",
+  "collection.journal.book.entries": "条目",
+  "collection.journal.book.progress": "解锁进度：",
+  "collection.journal.book.index_body": "这是收藏家手册中所有章节的目录。点击右页章节，可以查看对应套组、奖励与已追踪到的收藏品。",
+  "collection.journal.book.set_body": "本章节记录了%s的发现进度。完成整套收藏后，可获得奖励：%s。",
 
   "collection.progress.discovered": "发现新的收藏品：%s",
   "collection.progress.reward_granted": "已完成 %s，并获得奖励 %s",
