@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.2
+
+Release date: 2026-07-11
+
+### Trading
+
+- Optimized novice Collector trades so level 1 Collectors can reliably show three early-game options.
+- Novice Collectors keep the fixed Collector's Journal trade.
+- Novice Collectors keep one random mod collectible recycling trade.
+- Novice Collectors now also receive one random vanilla archaeology recycling trade when opened.
+- Existing novice Collectors are patched when players interact with them, so old villagers can receive the missing recycling options too.
+- Reworked level 2-5 Collector trades into randomized trade pools.
+- Each higher Collector level now adds one random clue map and one random archaeology recycling trade instead of fixed set-specific map trades.
+- Higher-level recycling trades can request mod collectibles or vanilla archaeology finds, with rare vanilla archaeology items appearing at expert/master levels.
+
 ## 0.5.1
 
 Release date: 2026-07-11
