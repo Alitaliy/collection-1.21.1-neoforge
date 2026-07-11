@@ -365,7 +365,7 @@
                                          "processors":  "minecraft:empty",
                                          "projection":  "rigid"
                                      },
-                         "weight":  2
+                         "weight":  1
                      }
                  ],
     "fallback":  "minecraft:village/desert/terminators"

@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.5.3
+
+Release date: 2026-07-11
+
+### Villages
+
+- Added dedicated Collector house templates for plains, desert, savanna, snowy, and taiga villages.
+- Each Collector house now uses vanilla blocks and a biome-appropriate village style instead of the old shared layout.
+- Collector houses now include a Collector's Workstation, a bed, shelves, interior decoration, and a dedicated Collector loot chest.
+- Removed non-Collector vanilla job-site blocks from Collector houses so villagers do not claim the wrong profession.
+- Replaced single glass panes with full glass blocks for more stable window rendering.
+- Removed the indoor hanging lantern from Collector houses.
+- Fixed Collector house wall torches so they attach to interior walls instead of replacing the wall block.
+- Replaced the first entrance plank with a biome-appropriate stair final state.
+- Fixed the entrance stair orientation so the step faces into the house.
+- Fixed bed orientation and restored the bed-side exterior wall block to each house's own wall material.
+- Reduced Collector house village pool weight from 2 to 1 to lower duplicate-house frequency in a single village.
+- Added the `collection:debug/place_collector_houses` debug function for placing all five Collector house variants in a row.
+- Added the `collection:chests/collector_house` loot table.
+- Collector house loot chests always contain one brush, then roll mostly vanilla archaeology finds with a smaller chance for mod collectibles.
+
 ## 0.5.2
 
 Release date: 2026-07-11
