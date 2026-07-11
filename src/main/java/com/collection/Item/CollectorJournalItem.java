@@ -28,7 +28,7 @@ public final class CollectorJournalItem extends Item {
             }
         } else if (player instanceof ServerPlayer serverPlayer) {
             if (player.isShiftKeyDown()) {
-                CollectionProgressService.giveClueMap(serverPlayer);
+                player.sendSystemMessage(Component.translatable("collection.journal.trade_required").withStyle(ChatFormatting.YELLOW));
             } else {
                 CollectionProgressService.syncInventory(serverPlayer, false);
             }
@@ -39,6 +39,6 @@ public final class CollectorJournalItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("collection.journal.tooltip.summary").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("collection.journal.tooltip.map").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("collection.journal.tooltip.trade").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

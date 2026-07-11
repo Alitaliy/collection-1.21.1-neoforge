@@ -1,5 +1,7 @@
 {
   "item.collection.journal.collector_journal": "Collector's Journal",
+  "block.collection.collector_workstation": "Collector's Workstation",
+  "entity.minecraft.villager.collection.collector": "Collector",
   "item.collection.coin.coin_25cent_1792": "1792 Quarter",
   "item.collection.coin.coin_nickel_1792": "1792 Nickel",
   "item.collection.coin.coin_1cent_1789": "1789 Penny",
@@ -55,6 +57,8 @@
   "collection.journal.clue": "Clue: %s",
   "collection.journal.tooltip.summary": "Use to open the collection journal.",
   "collection.journal.tooltip.map": "Sneak-use to receive today's clue map.",
+  "collection.journal.tooltip.trade": "Buy clue maps from a Collector villager.",
+  "collection.journal.trade_required": "Collector clues are now sold by Collector villagers.",
   "collection.journal.map_given": "Added a clue map for %s.",
   "collection.journal.map_name": "%s Clue Map",
   "collection.journal.map_missing": "No matching clue site for %s could be found nearby.",

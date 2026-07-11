@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.5.0
+
+Release date: 2026-07-11
+
+### Villagers
+
+- Added the Collector villager profession.
+- Added the Collector's Workstation job-site block.
+- Added Collector villager trades:
+  - Level 1: Collector's Journal
+  - Level 2: Ancient Coin clue maps
+  - Level 3: Arrowhead and Lost Relic clue maps
+  - Level 4: Fossil clue maps
+  - Level 5: Shrine Effigy clue maps
+
+### Villages
+
+- Added a unified Collector house template for vanilla villages.
+- Added Collector houses to plains, desert, savanna, snowy, and taiga village house pools.
+- Collector houses include the Collector's Workstation so villagers can claim the new profession.
+
+### Gameplay
+
+- Sneak-using the Collector's Journal no longer grants a free clue map.
+- Clue maps are now obtained through Collector villager trades.
+
 ## 0.4.4
 
 Release date: 2026-07-11

@@ -1,5 +1,7 @@
 {
   "item.collection.journal.collector_journal": "收藏家手册",
+  "block.collection.collector_workstation": "收藏家工作站",
+  "entity.minecraft.villager.collection.collector": "收藏家",
   "item.collection.coin.coin_25cent_1792": "1792年25美分硬币",
   "item.collection.coin.coin_nickel_1792": "1792年镍币",
   "item.collection.coin.coin_1cent_1789": "1789年便士",
@@ -55,6 +57,8 @@
   "collection.journal.clue": "线索：%s",
   "collection.journal.tooltip.summary": "右键打开收藏家手册界面。",
   "collection.journal.tooltip.map": "潜行右键领取今日线索地图。",
+  "collection.journal.tooltip.trade": "可从收藏家村民处购买线索地图。",
+  "collection.journal.trade_required": "线索现在需要与收藏家村民交易获得。",
   "collection.journal.map_given": "已为 %s 添加一张线索地图。",
   "collection.journal.map_name": "%s线索地图",
   "collection.journal.map_missing": "附近未能找到适合 %s 的线索地点。",

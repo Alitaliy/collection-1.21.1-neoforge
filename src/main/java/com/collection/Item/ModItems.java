@@ -1,6 +1,7 @@
 package com.collection.Item;
 
 import com.collection.Collection;
+import com.collection.block.ModBlocks;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -15,6 +16,9 @@ public final class ModItems {
             ITEMS.register("journal/collector_journal", () -> new CollectorJournalItem(
                     new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)
             ));
+
+    public static final DeferredItem<?> COLLECTOR_WORKSTATION =
+            ITEMS.registerSimpleBlockItem(ModBlocks.COLLECTOR_WORKSTATION);
 
     public static final DeferredItem<Item> COIN_25CENT_1792 = collectible("coin/coin_25cent_1792");
     public static final DeferredItem<Item> COIN_NICKEL_1792 = collectible("coin/coin_nickel_1792");

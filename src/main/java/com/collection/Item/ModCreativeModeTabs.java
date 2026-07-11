@@ -20,6 +20,7 @@ public final class ModCreativeModeTabs {
                     .title(Component.translatable("itemGroup.collection.collector_tab"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.COLLECTOR_JOURNAL);
+                        output.accept(ModItems.COLLECTOR_WORKSTATION);
                         output.accept(ModItems.COIN_25CENT_1792);
                         output.accept(ModItems.COIN_NICKEL_1792);
                         output.accept(ModItems.COIN_1CENT_1789);

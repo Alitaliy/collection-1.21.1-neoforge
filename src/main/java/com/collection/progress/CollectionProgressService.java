@@ -11,6 +11,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.ServerAdvancementManager;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
@@ -61,21 +62,29 @@ public final class CollectionProgressService {
             return;
         }
 
-        TagKey<Structure> structureTag = structureTagForSet(targetSet.id());
-        BlockPos target = player.serverLevel().findNearestMapStructure(structureTag, player.blockPosition(), 128, false);
-        if (target == null) {
+        ItemStack clueMap = createClueMap(player.serverLevel(), player.blockPosition(), targetSet);
+        if (clueMap.isEmpty()) {
             player.sendSystemMessage(Component.translatable("collection.journal.map_missing", targetSet.name()).withStyle(ChatFormatting.RED));
             return;
         }
 
-        ItemStack clueMap = MapItem.create(player.serverLevel(), target.getX(), target.getZ(), (byte) 2, true, true);
-        MapItem.renderBiomePreviewMap(player.serverLevel(), clueMap);
+        giveItem(player, clueMap);
+        player.sendSystemMessage(Component.translatable("collection.journal.map_given", targetSet.name()).withStyle(ChatFormatting.GOLD));
+    }
+
+    public static ItemStack createClueMap(ServerLevel level, BlockPos origin, CollectibleSetDefinition targetSet) {
+        TagKey<Structure> structureTag = structureTagForSet(targetSet.id());
+        BlockPos target = level.findNearestMapStructure(structureTag, origin, 128, false);
+        if (target == null) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack clueMap = MapItem.create(level, target.getX(), target.getZ(), (byte) 2, true, true);
+        MapItem.renderBiomePreviewMap(level, clueMap);
 
         MapItemSavedData.addTargetDecoration(clueMap, target, "+", MapDecorationTypes.TARGET_X);
         clueMap.set(DataComponents.CUSTOM_NAME, Component.translatable("collection.journal.map_name", targetSet.name()));
-
-        giveItem(player, clueMap);
-        player.sendSystemMessage(Component.translatable("collection.journal.map_given", targetSet.name()).withStyle(ChatFormatting.GOLD));
+        return clueMap;
     }
 
     private static boolean processCollectedStack(
