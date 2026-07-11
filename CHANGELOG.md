@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.1
+
+Release date: 2026-07-11
+
+### Trading
+
+- Added a novice Collector recycling trade.
+- Level 1 Collectors now keep selling the Collector's Journal and can also buy one random collectible item for emeralds.
+- The recycling trade grants villager XP, giving players an early upgrade path without repeatedly buying extra journals.
+
 ## 0.5.0
 
 Release date: 2026-07-11

@@ -3,6 +3,7 @@ package com.collection.village;
 import com.collection.Collection;
 import com.collection.Item.ModItems;
 import com.collection.collectible.CollectibleCatalog;
+import com.collection.collectible.CollectibleDefinition;
 import com.collection.collectible.CollectibleSetDefinition;
 import com.collection.progress.CollectionProgressService;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -35,6 +36,7 @@ public final class ModVillagerTrades {
 
         Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
         tradesForLevel(trades, 1).add(new ItemForEmeraldsTrade(ModItems.COLLECTOR_JOURNAL.toStack(), 4, 8, 2));
+        tradesForLevel(trades, 1).add(new RandomCollectibleRecyclingTrade(1, 3, 12, 5));
         tradesForLevel(trades, 2).add(new ClueMapTrade(CollectibleCatalog.COIN_SET, 8, 8, 8));
         tradesForLevel(trades, 3).add(new ClueMapTrade(CollectibleCatalog.ARROWHEAD_SET, 10, 8, 12));
         tradesForLevel(trades, 3).add(new ClueMapTrade(CollectibleCatalog.RELIC_SET, 12, 8, 12));
@@ -56,6 +58,28 @@ public final class ModVillagerTrades {
             return new MerchantOffer(
                     new ItemCost(Items.EMERALD, this.emeraldCost),
                     this.result.copy(),
+                    this.maxUses,
+                    this.xp,
+                    PRICE_MULTIPLIER
+            );
+        }
+    }
+
+    private record RandomCollectibleRecyclingTrade(int collectibleCost, int emeraldReward, int maxUses, int xp)
+            implements VillagerTrades.ItemListing {
+        @Override
+        public MerchantOffer getOffer(Entity trader, RandomSource random) {
+            if (CollectibleCatalog.COLLECTIBLES.isEmpty()) {
+                return null;
+            }
+
+            CollectibleDefinition collectible = CollectibleCatalog.COLLECTIBLES.get(
+                    random.nextInt(CollectibleCatalog.COLLECTIBLES.size())
+            );
+
+            return new MerchantOffer(
+                    new ItemCost(collectible.item().get(), this.collectibleCost),
+                    new ItemStack(Items.EMERALD, this.emeraldReward),
                     this.maxUses,
                     this.xp,
                     PRICE_MULTIPLIER
