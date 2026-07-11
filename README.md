@@ -2,65 +2,145 @@
 
 `Collection` 是一个面向 Minecraft 1.21.1 / NeoForge 的考古与探索模组。玩法灵感来自《荒野大镖客 2 Online》的收藏家：玩家探索遗迹、用刷子清理可疑沙子或可疑砂砾，并收集按地点、主题与稀有度分布的收藏品。
 
-## 0.4.0：收藏线扩展与轮换线索
+当前版本：`0.5.2`
 
-当前版本继续沿着 0.3.0 之后的“下一步”推进，并把剩余路线中的内容型部分先做成一轮新里程碑：
+## 当前核心玩法
 
-1. 新增两条收藏线：
-   - `化石`：菊石化石、琥珀化石、肋骨化石
-   - `神像`：玉质神像、太阳偶像、黑曜石护符
-2. 新增两类可定位遗迹：
-   - `collection:frozen_fossil_site`
-   - `collection:jungle_idol_shrine`
-3. 收藏家手册现在拥有“今日线索”轮换：
-   - 每天轮换一个重点套组
-   - 潜行右键会优先给出当前轮值套组的线索地图
-4. 新增阶段奖励：
-   - 每个套组在 `1/3` 进度时获得野外补给
-   - 每个套组在 `2/3` 进度时获得收藏家报酬
-5. 当玩家在“今日线索”轮值期间完成对应套组时，会额外获得一笔绿宝石奖励。
-6. 独立美术资源本轮仍然跳过，继续复用原版素材，后续再统一补齐。
+- 在原版和模组新增遗迹中寻找可疑方块。
+- 使用刷子清理可疑沙子 / 可疑砂砾，概率获得收藏品。
+- 通过收藏家手册查看收藏进度、套组详情与线索提示。
+- 在村庄中寻找收藏家村民，购买手册和线索地图。
+- 将模组收藏品或原版考古物品卖给收藏家，用来获得绿宝石并提升收藏家等级。
+- 完成收藏套组后获得对应奖励，并解锁相关进度。
 
-## 当前内容
+## 0.5.x：收藏家村民与交易循环
 
-- 收藏品类别：
-  - 古币：1792 Quarter、1792 Nickel、1789 Penny
-  - 箭头：燧石箭头、黑曜石箭头、骨制箭头
-  - 遗珍：圣甲虫吊坠、绿松石戒指、银质怀饰
-  - 化石：菊石化石、琥珀化石、肋骨化石
-  - 神像：玉质神像、太阳偶像、黑曜石护符
-- 套组奖励：
-  - 古币展示盒
-  - 箭头展示盒
-  - 遗珍名录
-  - 化石展示架
-  - 神龛档案
-- 原版考古兼容地点：
-  - 沙漠神殿
-  - 沙漠井
-  - 温暖海洋废墟
-  - 寒冷海洋废墟
-  - 古迹废墟常见层
-  - 古迹废墟稀有层
-- 自定义可定位遗迹：
-  - `collection:buried_coin_ruin`
-  - `collection:badlands_arrowhead_site`
-  - `collection:shoreline_relic_cache`
-  - `collection:frozen_fossil_site`
-  - `collection:jungle_idol_shrine`
+`0.5.x` 开始加入收藏家 NPC 玩法，让线索地图从“手册直接领取”改为“与收藏家交易获得”。
 
-原版考古结果仍然通过全局掉落修改器做“单物品替换”：命中收藏品时，用一件对应地点的收藏品替换原有考古产物；未命中时保持原版奖励不变。这样每个可疑方块始终只会产出一件战利品。
+### 新增内容
 
-## 数据驱动调整
+- 新增村民职业：`收藏家`
+- 新增职业方块：`收藏家工作台`
+- 新增收藏家手册交易
+- 新增线索地图交易
+- 新增收藏品 / 考古物品回收交易
+- 新增统一样式的收藏家小屋
+- 收藏家小屋会加入以下原版村庄房屋池：
+  - 平原村庄
+  - 沙漠村庄
+  - 热带草原村庄
+  - 雪原村庄
+  - 针叶林村庄
 
-不需要改 Java 代码：
+### 收藏家交易设计
+
+#### 1 级收藏家
+
+1 级收藏家会提供稳定的早期交易入口：
+
+- 固定出售收藏家手册
+- 随机收购一个本模组收藏品
+- 随机收购一个原版考古产物
+
+这样玩家不需要反复购买手册来升级收藏家；即使暂时刷不到指定模组收藏品，也可以通过原版考古产物推动升级。
+
+#### 2–5 级收藏家
+
+从 2 级开始，收藏家不再固定出售某一个套组的线索地图，而是使用随机交易池：
+
+- 每次升级新增一个随机线索地图交易
+- 每次升级新增一个随机考古物品回收交易
+- 回收交易可能要求：
+  - 本模组收藏品
+  - 原版考古常见产物
+  - 高等级原版稀有考古产物
+
+高等级收藏家可能收购更稀有的原版考古物品，例如 `music_disc_relic` 或 `sniffer_egg`。
+
+## 收藏品套组
+
+当前已有 5 条收藏线：
+
+- 古币
+  - `1792 Quarter`
+  - `1792 Nickel`
+  - `1789 Penny`
+- 箭头
+  - 燧石箭头
+  - 黑曜石箭头
+  - 骨制箭头
+- 遗珍
+  - 圣甲虫吊坠
+  - 绿松石戒指
+  - 银质怀饰
+- 化石
+  - 菊石化石
+  - 琥珀化石
+  - 肋骨碎片
+- 神像
+  - 玉质神像
+  - 太阳偶像
+  - 黑曜石护符
+
+## 套组奖励
+
+完成对应套组后会获得专属奖励：
+
+- 古币展示盒
+- 箭头展示盒
+- 遗珍名录
+- 化石展示架
+- 神龛档案
+
+收藏进度会保存在玩家数据中，死亡后不会丢失。
+
+## 可探索遗迹
+
+### 原版考古兼容地点
+
+模组会通过全局掉落修改器接入原版考古地点。命中收藏品时，会用一件对应地点的收藏品替换原本考古产物；未命中时保持原版奖励不变。
+
+- 沙漠神殿
+- 沙漠井
+- 温暖海洋废墟
+- 寒冷海洋废墟
+- 古迹废墟常见层
+- 古迹废墟稀有层
+
+### 模组新增结构
+
+当前可通过 `/locate structure` 与 `/place structure` 测试的结构：
+
+- `collection:buried_coin_ruin`
+- `collection:badlands_arrowhead_site`
+- `collection:shoreline_relic_cache`
+- `collection:frozen_fossil_site`
+- `collection:jungle_idol_shrine`
+
+这些结构中会包含可疑方块，并接入对应的收藏品掉落池。
+
+## 收藏家手册
+
+收藏家手册用于查看进度，而不再直接发放线索地图。
+
+- 右键：打开手册 GUI
+- 潜行右键：提示玩家线索地图需要通过收藏家村民交易获得
+- 手册 GUI 可查看：
+  - 总收藏进度
+  - 各收藏套组进度
+  - 套组奖励
+  - 收藏品线索说明
+
+## 数据驱动资源
+
+多数玩法参数可以通过数据包资源调整。
 
 - `src/main/resources/data/collection/loot_modifiers/`
   - 控制原版考古地点的收藏品替换概率。
 - `src/main/resources/data/collection/loot_table/archaeology/`
-  - 控制各地点和各自定义遗迹中可疑方块的收藏品权重。
+  - 控制各地点和各模组遗迹中可疑方块的收藏品权重。
 - `src/main/resources/data/collection/worldgen/structure/`
-  - 控制自定义遗迹的结构类型与生成步骤。
+  - 控制自定义遗迹的结构类型。
 - `src/main/resources/data/collection/worldgen/structure_set/`
   - 控制遗迹的分布频率、间距和 salt。
 - `src/main/resources/data/collection/worldgen/template_pool/`
@@ -72,26 +152,21 @@
 - `src/main/resources/data/collection/tags/worldgen/structure/`
   - 控制线索地图会追踪哪些结构目标。
 - `src/main/resources/data/collection/tags/item/`
-  - 划分收藏类别标签，方便后续扩展更多系统。
+  - 收藏品分类标签。
+- `src/main/resources/data/minecraft/worldgen/template_pool/village/*/houses.json`
+  - 将收藏家小屋注入原版村庄房屋池。
 
-如果你修改了自定义遗迹模板，可以重新执行：
+如果修改了自定义遗迹模板，可以重新执行：
 
 ```powershell
-& .\scripts\generate_structures.ps1
+.\scripts\generate_structures.ps1
 ```
 
-这些均为数据包资源，整合包和服务器可用同路径数据包直接覆盖。
+如果修改收藏家村庄小屋模板，可以重新执行：
 
-## 玩家使用
-
-- `收藏家手册`
-  - 右键：打开 GUI 手册，查看总进度、各套组详情与今日线索
-  - 潜行右键：领取当前轮值或最近未完成套组的线索地图
-- 当玩家第一次获得某件收藏品时，会记录到玩家进度中。
-- 每个套组在 `1/3` 与 `2/3` 进度时都会分别发放一次阶段奖励。
-- 当某个套组 3 件都发现后，会自动发放对应奖励；死亡后进度会保留。
-- 如果该套组恰好是“今日线索”，完成时还会额外获得一笔绿宝石奖励。
-- 完成收藏流程会逐步解锁专属成就。
+```powershell
+.\scripts\generate_village_collector_house.ps1
+```
 
 ## 开发与验证
 
@@ -102,21 +177,47 @@
 .\gradlew.bat runServer
 ```
 
-在开发环境中可以使用以下命令快速验证：
+开发环境中可使用以下命令快速验证结构：
 
-- `/locate structure collection:buried_coin_ruin`
-- `/locate structure collection:badlands_arrowhead_site`
-- `/locate structure collection:shoreline_relic_cache`
-- `/locate structure collection:frozen_fossil_site`
-- `/locate structure collection:jungle_idol_shrine`
-- `/place structure collection:buried_coin_ruin`
-- `/place structure collection:badlands_arrowhead_site`
-- `/place structure collection:shoreline_relic_cache`
-- `/place structure collection:frozen_fossil_site`
-- `/place structure collection:jungle_idol_shrine`
+```mcfunction
+/locate structure collection:buried_coin_ruin
+/locate structure collection:badlands_arrowhead_site
+/locate structure collection:shoreline_relic_cache
+/locate structure collection:frozen_fossil_site
+/locate structure collection:jungle_idol_shrine
 
-## 下一步
+/place structure collection:buried_coin_ruin
+/place structure collection:badlands_arrowhead_site
+/place structure collection:shoreline_relic_cache
+/place structure collection:frozen_fossil_site
+/place structure collection:jungle_idol_shrine
+```
 
-- 为收藏品、手册与奖励物补充独立美术资源，而不是继续复用原版贴图。
-- 增加真正的收藏家委托 / 交付循环，例如 NPC、订单、套组上交与重复报酬。
-- 扩展更大型的主题建筑群、营地链条和更深的地图追踪逻辑，让不同收藏线拥有更鲜明的区域玩法。
+测试收藏家交易时，建议新生成一个收藏家村民，或让无职业村民认领收藏家工作台。旧世界中已经生成并升级过的收藏家，其已有交易不会完全重洗；新生成交易会使用当前版本的随机池。
+
+## 版本历史
+
+- `0.5.2`
+  - 优化收藏家 1 级交易为手册 + 模组收藏品回收 + 原版考古物回收。
+  - 将 2–5 级收藏家交易改为随机线索地图 + 随机考古物回收。
+- `0.5.1`
+  - 为 1 级收藏家加入模组收藏品回收交易。
+- `0.5.0`
+  - 新增收藏家村民、收藏家工作台和村庄收藏家小屋。
+  - 线索地图改为通过收藏家交易获得。
+- `0.4.x`
+  - 重做收藏家手册 GUI。
+  - 修复结构模板放置与 GUI 显示问题。
+- `0.3.0`
+  - 将自定义发掘点升级为可定位、可放置的结构系统。
+- `0.2.0`
+  - 扩展箭头与遗珍收藏线，加入收藏进度与奖励。
+- `0.1.0`
+  - 首个可发布里程碑，完成古币收藏线和基础考古掉落接入。
+
+## 下一步计划
+
+- 补充独立美术资源，替换当前复用的原版素材。
+- 继续扩展收藏家委托 / 订单 / 上交流程。
+- 增加更大型的主题建筑群、营地链条和区域化收藏玩法。
+- 为不同生物群系村庄制作差异化收藏家小屋。
